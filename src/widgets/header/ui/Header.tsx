@@ -2,16 +2,16 @@ import { ThemeToggleButton } from '../../../shared/ui/ThemeToggleButton'
 
 type HeaderProps = {
   onThemeToggle?: () => void
-  themeToggleLabel?: string
 }
 
-export function Header({ onThemeToggle, themeToggleLabel }: HeaderProps) {
+export function Header({ onThemeToggle }: HeaderProps) {
   return (
     <header className="app-header">
-      <div className="app-header__brand">Tato Streaming</div>
+      <div className="app-header__brand">
+        
+      </div>
       <div className="app-header__actions">
-        <span className="app-header__badge">front only</span>
-        <ThemeToggleButton onToggle={onThemeToggle} label={themeToggleLabel} />
+        <ThemeToggleButton onToggle={onThemeToggle} />
       </div>
     </header>
   )

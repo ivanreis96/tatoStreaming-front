@@ -21,7 +21,7 @@ const ThemeContext = createContext<ThemeContextValue | undefined>(undefined)
 
 function getInitialTheme(): Theme {
   if (typeof window === 'undefined') {
-    return 'light'
+    return 'dark'
   }
 
   const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY)
@@ -29,7 +29,7 @@ function getInitialTheme(): Theme {
     return storedTheme
   }
 
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  return 'dark'
 }
 
 type AppProvidersProps = {

@@ -3,13 +3,11 @@ import { HomePage } from '../pages/home'
 import { Header } from '../widgets/header'
 
 function AppContent() {
-  const { theme, toggleTheme } = useTheme()
-
-  const themeToggleLabel = theme === 'dark' ? 'Tema claro' : 'Tema escuro'
+  const { toggleTheme } = useTheme()
 
   return (
     <div className="app-shell">
-      <Header onThemeToggle={toggleTheme} themeToggleLabel={themeToggleLabel} />
+      <Header onThemeToggle={toggleTheme} />
       <main className="app-content">
         <HomePage />
       </main>
