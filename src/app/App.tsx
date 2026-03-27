@@ -4,10 +4,11 @@ import { Header } from '../widgets/header'
 
 function AppContent() {
   const { toggleTheme } = useTheme()
+  const isLoged = false
 
   return (
     <div className="app-shell">
-      <Header onThemeToggle={toggleTheme} />
+      <Header onThemeToggle={toggleTheme} isLoged={isLoged} />
       <main className="app-content">
         <HomePage />
       </main>
