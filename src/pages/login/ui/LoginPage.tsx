@@ -1,7 +1,9 @@
+import styles from '../style.module.css'
+
 export function LoginPage() {
     return (
-        <div className="login-page">
-            <span>pagina de login</span>
+        <div className={styles.loginPage}>
+            <div className={styles.quadradoTesteRoxo} />
         </div>
     )
 }
