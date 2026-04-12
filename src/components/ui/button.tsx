@@ -10,7 +10,7 @@ const buttonVariants = cva(
         default: "bg-primary text-primary-foreground hover:bg-primary-hover active:bg-primary-active disabled:bg-primary-disabled disabled:text-disabled-foreground aria-expanded:bg-primary",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground disabled:bg-secondary-disabled disabled:text-disabled-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+        link: "text-primary underline-offset-2 hover:underline",
       },
       size: {
         default:
@@ -25,6 +25,13 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
+    compoundVariants: [
+      {
+        variant: "link",
+        size: "default",
+        className: "h-auto px-0 py-0 rounded-none",
+      },
+    ],
   }
 )
 

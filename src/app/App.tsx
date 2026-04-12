@@ -1,7 +1,8 @@
+import { BrowserRouter } from 'react-router-dom'
 import { AppProviders } from './providers/AppProviders'
 import { useAppDispatch, useAppSelector } from './providers/hooks'
 import { toggleTheme } from '../features/theme'
-import { HomePage } from '../pages/home'
+import { AppRoutes } from './routes/AppRoutes'
 import { Header } from '../widgets/header'
 import { Footer } from '../widgets/footer'
 
@@ -18,7 +19,7 @@ function AppContent() {
     <div className="app-shell">
       <Header onThemeToggle={onThemeToggle} darkMode={darkMode} isLoged={isLoged} />
       <main className="app-content">
-        <HomePage />
+        <AppRoutes />
       </main>
       <Footer />
     </div>
@@ -27,9 +28,11 @@ function AppContent() {
 
 function App() {
   return (
-    <AppProviders>
-      <AppContent />
-    </AppProviders>
+    <BrowserRouter>
+      <AppProviders>
+        <AppContent />
+      </AppProviders>
+    </BrowserRouter>
   )
 }
 

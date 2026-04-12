@@ -28,6 +28,7 @@ function AppImage({
   style,
   ...props
 }: AppImageProps) {
+  const scopedFillId = React.useId().replace(/[^a-zA-Z0-9_-]/g, "")
   const sizeStyle: React.CSSProperties = {}
 
   if (!keepOriginalSize) {
@@ -47,20 +48,29 @@ function AppImage({
 
   if (typeof src !== "string") {
     const SvgIcon = src
+    const applyForcedFill = Boolean(fillColor)
 
     return (
-      <SvgIcon
-        data-slot="app-image"
-        role="img"
-        aria-label={alt}
-        className={cn("block max-w-full", className)}
-        style={{
-          ...sizeStyle,
-          ...(fillColor ? { color: fillColor, fill: fillColor } : {}),
-          ...style,
-        }}
-        {...svgProps}
-      />
+      <>
+        {applyForcedFill ? (
+          <style>
+            {`[data-app-image-fill="${scopedFillId}"], [data-app-image-fill="${scopedFillId}"] * { fill: ${fillColor} !important; }`}
+          </style>
+        ) : null}
+        <SvgIcon
+          data-slot="app-image"
+          data-app-image-fill={applyForcedFill ? scopedFillId : undefined}
+          role="img"
+          aria-label={alt}
+          className={cn("block max-w-full", className)}
+          style={{
+            ...sizeStyle,
+            ...(fillColor ? { color: fillColor, fill: fillColor } : {}),
+            ...style,
+          }}
+          {...svgProps}
+        />
+      </>
     )
   }
 
