@@ -1,7 +1,7 @@
 import { BrowserRouter } from 'react-router-dom'
 import { AppProviders } from './providers/AppProviders'
 import { useAppDispatch, useAppSelector } from './providers/hooks'
-import { toggleTheme } from '../features/theme'
+import { toggleTheme } from '../shared/theme'
 import { AppRoutes } from './routes/AppRoutes'
 import { Header } from '../widgets/header'
 import { Footer } from '../widgets/footer'

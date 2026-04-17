@@ -51,6 +51,7 @@
   --muted-foreground: var(--muted);
   --accent-foreground: #ffffff;
   --input: var(--mauve-6);
+  --placeholder: var(--mauve-9);
   --ring: var(--purple-9);
   --destructive: #dc2626;
 
