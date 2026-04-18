@@ -12,7 +12,7 @@ var childrenCard: FormCardProps = {
 
 export function CadastroPage() {
     return (
-        <div className={styles.cadastroPage}>
+        <div className={styles['cadastro-page']}>
             <FormCard {...childrenCard} />
         </div>
     )

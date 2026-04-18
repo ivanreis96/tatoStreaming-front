@@ -12,7 +12,7 @@ var childrenCard: FormCardProps = {
 
 export function LoginPage() {
     return (
-        <div className={styles.loginPage}>
+        <div className={styles['login-page']}>
             <FormCard {...childrenCard} />
         </div>
     )
