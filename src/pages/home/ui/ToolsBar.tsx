@@ -1,9 +1,7 @@
-export function ToolsBar() {
+export function ToolsBar(ToolsBarProps: any) {
     return (
-        <div className="tools-bar">
-            <button className="tool-button">Ferramenta 1</button>
-            <button className="tool-button">Ferramenta 2</button>
-            <button className="tool-button">Ferramenta 3</button>
+        <div className="tools-bar">      
+            {ToolsBarProps.childrens}  
         </div>
     )
 }
