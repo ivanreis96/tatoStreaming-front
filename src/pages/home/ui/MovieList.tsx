@@ -1,5 +1,6 @@
 import styles from '../MovieList.module.css'
 import type { Media } from '../../../entities/media/model/types'
+import { MovieCard } from './MovieCard'
 
 type MovieListProps = {
     movies: Media[]
@@ -11,7 +12,7 @@ export function MovieList(props: MovieListProps) {
             {props.movies.length > 0 ? (
                 <div className={styles['movie-content__list']}>
                     {props.movies.map((movie) => (
-                        <div key={movie.id}>{movie.titulo}</div>
+                        <MovieCard key={movie.id} {...movie} />
                     ))}
                 </div>
             ) : (

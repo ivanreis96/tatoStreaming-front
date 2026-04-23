@@ -1,3 +1,5 @@
 export { HomePage } from './ui/HomePage'
 export { ToolsBar } from './ui/ToolsBar'
 export { MovieList } from './ui/MovieList'
+export { MovieCard } from './ui/MovieCard'
+export { useHomeMovies } from './model/useHomeMovies'

@@ -19,5 +19,6 @@ export type Media = {
   lucro: string
   posterUrl: string
   kind: MediaKind
+  backgroundUrl: string
   teaserUrl: string
 }

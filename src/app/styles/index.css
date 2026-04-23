@@ -155,7 +155,7 @@ body {
 
 .app-content {
   padding: 0px 22px;
-  height: calc(100vh - 149px);
+  min-height: calc(100vh - 149px);
 }
 
 .home-grid {
