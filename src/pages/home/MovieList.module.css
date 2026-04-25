@@ -1,3 +1,5 @@
+@import "@radix-ui/colors/mauve-dark-alpha.css";
+
 .movie-content {
     display: flex;    
     justify-content: center;
@@ -52,15 +54,16 @@
     font-size: 16px;
     font-weight: 600;
     color: var(--text-primary);
-    transform: translateY(0);
-    transition: transform 220ms ease;
 }
 
 .movie-card-description__subtitle {
     font-size: 12.8px;
     color: var(--text-primary);
     opacity: 0;
+    max-height: 0;
+    overflow: hidden;
     transform: translateY(8px);
+    transition: max-height 220ms ease, opacity 220ms ease, transform 220ms ease;
 }
 
 .movie-card:hover .movie-card-description,
@@ -68,33 +71,17 @@
     gap: 8px;
 }
 
-.movie-card:hover .movie-card-description__title,
-.movie-card:focus-within .movie-card-description__title {
-    transform: translateY(-4px);
-}
-
 .movie-card:hover .movie-card-description__subtitle,
 .movie-card:focus-within .movie-card-description__subtitle {
-    animation: subtitle-reveal 220ms ease forwards;
-}
-
-@keyframes subtitle-reveal {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    max-height: 100%;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
     .movie-card-description,
     .movie-card-description__title,
-    .movie-card:hover .movie-card-description__subtitle,
-    .movie-card:focus-within .movie-card-description__subtitle {
+    .movie-card-description__subtitle {
         transition: none;
         animation: none;
     }

@@ -1,0 +1,7 @@
+.tools-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin:24px 0px;
+}

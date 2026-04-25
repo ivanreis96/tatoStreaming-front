@@ -1,4 +1,6 @@
-import { Input } from '../../../components/ui/input'
+import { AppImage } from '@/components/ui/image'
+import SearchIcon from '../../../assets/search.svg?react'
+import { InputGroup, InputGroupAddon, InputGroupInput } from '../../../components/ui/input-group'
 
 type SearchMovieInputProps = {
   value: string
@@ -8,13 +10,18 @@ type SearchMovieInputProps = {
 export function SearchMovieInput({ value, onChange }: SearchMovieInputProps) {
   return (
     <div className="w-full max-w-xl">
-      <Input
-        type="text"
-        placeholder="Buscar filme pelo titulo"
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        aria-label="Buscar filme por titulo"
-      />
+      <InputGroup>
+        <InputGroupInput
+          type="text"
+          placeholder="Buscar filme pelo titulo"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          aria-label="Buscar filme por titulo"
+        />
+        <InputGroupAddon align="inline-end">
+          <AppImage src={SearchIcon} alt="Pesquisa" fillColor="var(--muted)" width={24} />
+        </InputGroupAddon>
+      </InputGroup>
     </div>
   )
 }

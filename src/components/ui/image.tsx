@@ -54,7 +54,7 @@ function AppImage({
       <>
         {applyForcedFill ? (
           <style>
-            {`[data-app-image-fill="${scopedFillId}"], [data-app-image-fill="${scopedFillId}"] * { fill: ${fillColor} !important; }`}
+            {`[data-app-image-fill="${scopedFillId}"], [data-app-image-fill="${scopedFillId}"] * { fill: ${fillColor} !important; stroke: ${fillColor} !important; }`}
           </style>
         ) : null}
         <SvgIcon
@@ -65,7 +65,7 @@ function AppImage({
           className={cn("block max-w-full", className)}
           style={{
             ...sizeStyle,
-            ...(fillColor ? { color: fillColor, fill: fillColor } : {}),
+            ...(fillColor ? { color: fillColor, fill: fillColor, stroke: fillColor } : {}),
             ...style,
           }}
           {...svgProps}

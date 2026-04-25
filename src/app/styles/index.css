@@ -22,10 +22,10 @@
   --font-ui: 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
   --font-heading-ui: 'Montserrat', 'Roboto' Tahoma, Geneva, Verdana;
 
-  /* Light Mode */
   --bg: var(--mauve-1);
   --surface: var(--mauve-3);
   --surface-2: #e9eff8;
+  --surface-disabled: var(--mauve-a3);
   --text: var(--mauve-12);
   --muted: var(--mauve-11);
   /* --accent: #0b79f7; */
@@ -54,6 +54,7 @@
   --placeholder: var(--mauve-9);
   --ring: var(--purple-9);
   --destructive: #dc2626;
+
 
 
   /* 
