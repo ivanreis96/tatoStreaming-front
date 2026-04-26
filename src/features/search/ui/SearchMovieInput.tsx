@@ -13,10 +13,10 @@ export function SearchMovieInput({ value, onChange }: SearchMovieInputProps) {
       <InputGroup>
         <InputGroupInput
           type="text"
-          placeholder="Buscar filme pelo titulo"
+          placeholder="Pesquise por filmes"
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          aria-label="Buscar filme por titulo"
+          aria-label="Pesquise por filmes"
         />
         <InputGroupAddon align="inline-end">
           <AppImage src={SearchIcon} alt="Pesquisa" fillColor="var(--muted)" width={24} />

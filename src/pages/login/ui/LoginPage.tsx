@@ -4,7 +4,7 @@ import { FormLogin } from './FormLogin'
 
 var childrenCard: FormCardProps = {
     children:
-        <FormLogin />    
+        <FormLogin />
     ,
     customClasses: ["p-4"],
 }
@@ -12,8 +12,10 @@ var childrenCard: FormCardProps = {
 
 export function LoginPage() {
     return (
-        <div className={styles['login-page']}>
-            <FormCard {...childrenCard} />
+        <div className={styles['align-login']}>
+            <div className={styles['login-page']}>
+                <FormCard {...childrenCard} />
+            </div>
         </div>
     )
 }
