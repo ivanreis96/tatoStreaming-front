@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { filterMoviesByTitle } from '../../../features/search'
 import type { SearchFilters } from '../../../features/search'
 import type { Media } from '../../../entities/media/model/types'
+import { filterMoviesByOtherFields } from '@/features/movieFilters'
+import type { MovieFilters } from '@/features/movieFilters'
 
 const MOVIES_PER_PAGE = 10
 
@@ -20,12 +22,20 @@ type UseHomeMoviesResult = {
 }
 
 export function useHomeMovies(movies: Media[]): UseHomeMoviesResult {
-  const [filters, setFilters] = useState<SearchFilters>({ movie: '' })
+  const [searchFilters, setSearchFilters] = useState<SearchFilters>({ movie: '' })
+  const [otherFilters, setOtherFilters] = useState<MovieFilters>({
+    duracao: '',
+    lancamentoInicio: '',
+    lancamentoFim: '',
+    generos: [],
+  })
   const [currentPage, setCurrentPage] = useState(1)
 
   const filteredMovies = useMemo(() => {
-    return filterMoviesByTitle(movies, filters.movie)
-  }, [movies, filters.movie])
+    return (
+      filterMoviesByTitle(filterMoviesByOtherFields(movies, otherFilters), searchFilters.movie)
+    )
+  }, [movies, searchFilters.movie])
 
   const totalPages = useMemo(() => {
     return Math.max(1, Math.ceil(filteredMovies.length / MOVIES_PER_PAGE))
@@ -33,7 +43,7 @@ export function useHomeMovies(movies: Media[]): UseHomeMoviesResult {
 
   useEffect(() => {
     setCurrentPage(1)
-  }, [filters.movie])
+  }, [searchFilters.movie])
 
   useEffect(() => {
     if (currentPage > totalPages) {
@@ -47,9 +57,9 @@ export function useHomeMovies(movies: Media[]): UseHomeMoviesResult {
   }, [currentPage, filteredMovies])
 
   return {
-    searchValue: filters.movie,
+    searchValue: searchFilters.movie,
     onSearchChange: (value) => {
-      setFilters((current) => ({ ...current, movie: value }))
+      setSearchFilters((current) => ({ ...current, movie: value }))
     },
     paginatedMovies,
     filteredMoviesCount: filteredMovies.length,

@@ -6,7 +6,7 @@ export type Media = {
   tituloOriginal: string
   subtitulo: string
   sinopse: string
-  genres: string[]
+  generos: string[]
   popularidade: string
   votos: string
   rating: number
