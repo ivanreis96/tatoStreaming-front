@@ -1,4 +1,4 @@
-import { AppImage } from "../../../components/ui/image"
+import { AppImage } from "../../../shared/ui/image"
 import styles from '../MovieList.module.css'
 
 

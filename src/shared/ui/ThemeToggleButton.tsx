@@ -1,5 +1,5 @@
 import { Button } from "../../components/ui/button"
-import { AppImage } from "../../components/ui/image"
+import { AppImage } from "./image"
 import SunIcon from "../../assets/sun.svg?react"
 import MoonIcon from "../../assets/moon.svg?react"
 

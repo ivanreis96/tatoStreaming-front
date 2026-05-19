@@ -1,5 +1,5 @@
 import { Button } from '../../../components/ui/button'
-import { AppImage } from '../../../components/ui/image'
+import { AppImage } from '../../../shared/ui/image'
 import { ThemeToggleButton } from '../../../shared/ui/ThemeToggleButton'
 import LogoIcon from "@/assets/logo.svg?react"
 
