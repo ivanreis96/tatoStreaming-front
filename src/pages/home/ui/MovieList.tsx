@@ -1,5 +1,5 @@
 import styles from '../MovieList.module.css'
-import type { Media } from '../../../entities/media/model/types'
+import type { Media } from '@/entities/media'
 import { MovieCard } from './MovieCard'
 
 type MovieListProps = {

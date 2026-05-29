@@ -1,5 +1,5 @@
 import * as React from "react"
-import { cn } from "../../lib/utils"
+import { cn } from "@/lib/utils"
 
 type ImageDimension = number | string
 type SvgComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>

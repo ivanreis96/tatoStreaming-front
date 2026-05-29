@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { SearchMovieInput } from '../../../features/search'
+import { SearchMovieInput } from '@/features/search'
 import style from '../toolbar.module.css'
 
 type ToolsBarProps = {

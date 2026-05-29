@@ -1,8 +1,8 @@
 import { MovieList } from "./MovieList";
 import { ToolsBar } from "./ToolsBar";
-import { Button } from '../../../components/ui/button'
+import { Button } from '@/components/ui/button'
 import { useHomeMovies } from '../model/useHomeMovies'
-import { mockMovies } from '../../../mock/mockMovies'
+import { mockMovies } from '@/mock/mockMovies'
 
 export function HomePage() {
   const {

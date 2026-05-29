@@ -1,4 +1,4 @@
-import type { Media } from "@/entities/media/model/types";
+import type { Media } from "@/entities/media";
 
 export const mockMovies: Media[] = [
   {

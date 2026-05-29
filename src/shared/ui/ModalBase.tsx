@@ -14,8 +14,6 @@ type ModalBaseProps = {
     title: string,
     description?: string,
     children: ReactNode,
-    
-    // onSearchChange: (value: string) => void
 }
 
 export function ModalBase({ trigger, title, description, children }: ModalBaseProps) {

@@ -1,7 +1,7 @@
-import { Button } from "../../components/ui/button"
+import { Button } from "@/components/ui/button"
 import { AppImage } from "./image"
-import SunIcon from "../../assets/sun.svg?react"
-import MoonIcon from "../../assets/moon.svg?react"
+import SunIcon from "@/assets/sun.svg?react"
+import MoonIcon from "@/assets/moon.svg?react"
 
 type ThemeToggleButtonProps = {
   onToggle?: () => void,

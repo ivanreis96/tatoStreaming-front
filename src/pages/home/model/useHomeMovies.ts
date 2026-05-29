@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
-import { filterMoviesByTitle } from '../../../features/search'
-import type { SearchFilters } from '../../../features/search'
-import type { Media } from '../../../entities/media/model/types'
+import { filterMoviesByTitle } from '@/features/search'
+import type { SearchFilters } from '@/features/search'
+import type { Media } from '@/entities/media'
 import { filterMoviesByOtherFields } from '@/features/movieFilters'
 import type { MovieFilters } from '@/features/movieFilters'
 

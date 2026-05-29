@@ -1,6 +1,6 @@
-import { AppImage } from '@/shared/ui/image'
-import SearchIcon from '../../../assets/search.svg?react'
-import { InputGroup, InputGroupAddon, InputGroupInput } from '../../../components/ui/input-group'
+import { AppImage } from '@/shared'
+import SearchIcon from '@/assets/search.svg?react'
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
 
 type SearchMovieInputProps = {
   value: string

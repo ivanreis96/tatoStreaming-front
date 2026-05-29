@@ -1,6 +1,5 @@
-import { Button } from '../../../components/ui/button'
-import { AppImage } from '../../../shared/ui/image'
-import { ThemeToggleButton } from '../../../shared/ui/ThemeToggleButton'
+import { Button } from '@/components/ui/button'
+import { AppImage, ThemeToggleButton } from '@/shared'
 import LogoIcon from "@/assets/logo.svg?react"
 
 type HeaderProps = {

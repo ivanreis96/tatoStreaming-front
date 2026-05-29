@@ -1,4 +1,4 @@
-import type { Media } from '../../../entities/media/model/types'
+import type { Media } from '@/entities/media'
 
 export function filterMoviesByTitle(movies: Media[], movieTitle: string): Media[] {
   const normalizedTitle = movieTitle.trim().toLowerCase()

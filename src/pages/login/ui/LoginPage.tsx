@@ -1,4 +1,4 @@
-import FormCard, { type FormCardProps } from '../../../shared/ui/FormCard'
+import { FormCard, type FormCardProps } from '@/shared'
 import styles from '../style.module.css'
 import { FormLogin } from './FormLogin'
 
