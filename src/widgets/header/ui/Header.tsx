@@ -20,8 +20,9 @@ export function Header({ onThemeToggle, darkMode = true, isLoged }: HeaderProps)
           src={LogoIcon}
           alt="Logo Tato Streaming"
           className="app-header__logo"
-          keepOriginalSize
           fillColor={darkMode ? "#fff" : "#000"}
+          height={60}
+          fullWidth={true}
         />
       </div>
       <div className="app-header__actions">
