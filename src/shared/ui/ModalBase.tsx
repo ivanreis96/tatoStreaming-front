@@ -1,26 +1,36 @@
-import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription } from "@/components/ui/popover";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 import type { ReactNode } from "react";
 
 
 type ModalBaseProps = {
-    ChildButton: ReactNode,
-    Titulo: string,
+    trigger: ReactNode,
+    title: string,
+    description?: string,
+    children: ReactNode,
     
     // onSearchChange: (value: string) => void
 }
 
-export function ModalBase({ChildButton, Titulo}: ModalBaseProps) {
+export function ModalBase({ trigger, title, description, children }: ModalBaseProps) {
     return (
-        <Popover>
-            <PopoverTrigger asChild>
-                { ChildButton}
-            </PopoverTrigger>
-            <PopoverContent>
-                <PopoverHeader>
-                    <PopoverTitle>{ Titulo }</PopoverTitle>
-                    <PopoverDescription>Description text here.</PopoverDescription>
-                </PopoverHeader>
-            </PopoverContent>
-        </Popover>
+        <Dialog>
+            <DialogTrigger asChild>
+                {trigger}
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>{title}</DialogTitle>
+                    {description ? <DialogDescription>{description}</DialogDescription> : null}
+                </DialogHeader>
+                {children}
+            </DialogContent>
+        </Dialog>
     )
 }
