@@ -21,7 +21,7 @@
   /* Fonts */
   --font-ui: 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
   --font-heading-ui: 'Montserrat', 'Roboto' Tahoma, Geneva, Verdana;
-
+  --spacing: 4px;
   --bg: var(--mauve-1);
   --surface: var(--mauve-3);
   --surface-2: #e9eff8;
@@ -46,10 +46,10 @@
   --foreground: var(--text);
   --card: var(--surface);
   --card-foreground: var(--text);
-  --popover: var(--surface);
-  --popover-foreground: var(--text);
+  --dialog: var(--surface);
+  --dialog-foreground: var(--text);
   --muted-foreground: var(--muted);
-  --accent-foreground: #ffffff;
+  --accent-foreground: var(--text);
   --input: var(--mauve-6);
   --placeholder: var(--mauve-9);
   --ring: var(--purple-9);
@@ -223,8 +223,8 @@ body {
   --color-secondary-hover: var(--secondary-hover);
   --color-secondary-active: var(--secondary-active);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
+  --color-dialog-foreground: var(--dialog-foreground);
+  --color-dialog: var(--dialog);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --color-foreground: var(--foreground);

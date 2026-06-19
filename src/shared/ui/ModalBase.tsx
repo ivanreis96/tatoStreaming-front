@@ -2,6 +2,7 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -14,20 +15,27 @@ type ModalBaseProps = {
     title: string,
     description?: string,
     children: ReactNode,
+    footerContent?: ReactNode,
 }
 
-export function ModalBase({ trigger, title, description, children }: ModalBaseProps) {
+export function ModalBase({ trigger, title, description, children, footerContent }: ModalBaseProps) {
     return (
         <Dialog>
             <DialogTrigger asChild>
                 {trigger}
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="bg-dialog sm:max-w-[560px]">
                 <DialogHeader>
                     <DialogTitle>{title}</DialogTitle>
                     {description ? <DialogDescription>{description}</DialogDescription> : null}
                 </DialogHeader>
-                {children}
+                {children}               
+                {footerContent ?
+                    <DialogFooter className="bg-dialog">
+                        {footerContent}
+                    </DialogFooter>
+                    : null
+                }
             </DialogContent>
         </Dialog>
     )
