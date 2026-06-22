@@ -1,4 +1,4 @@
-export type MovieFilters ={
+export type MovieFilters = {
     duracao: string,
     lancamentoInicio?: Date,
     lancamentoFim?: Date,
