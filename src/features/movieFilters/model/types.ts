@@ -1,6 +1,6 @@
 export type MovieFilters ={
     duracao: string,
-    lancamentoInicio: string,
-    lancamentoFim: string,
+    lancamentoInicio?: Date,
+    lancamentoFim?: Date,
     generos: string[],
 }

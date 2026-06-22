@@ -1,19 +1,24 @@
 import { Button } from "@/components/ui/button"
 
-export function FilterFooter () {
+type FilterFooterProps = {
+    onClearFilters: () => void
+    onApplyFilters: () => void
+}
+
+export function FilterFooter ({ onClearFilters, onApplyFilters }: FilterFooterProps) {
     return (
         <div className="w-full flex justify-end gap-4">
             <Button                
                 variant="secondary"
                 size="default"
-                onClick={() => console.log('Limpar filtros')}            
+                onClick={onClearFilters}
             >
                 Limpar Filtros
             </Button>
             <Button
                 variant="default"
                 size="default"
-                onClick={() => console.log('Aplicar filtros')}
+                onClick={onApplyFilters}
             >
                 Aplicar Filtros
             </Button> 

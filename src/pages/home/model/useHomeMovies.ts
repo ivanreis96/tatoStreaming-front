@@ -10,6 +10,8 @@ const MOVIES_PER_PAGE = 10
 type UseHomeMoviesResult = {
   searchValue: string
   onSearchChange: (value: string) => void
+  otherFilters: MovieFilters
+  onOtherFiltersChange: (nextFilters: Partial<MovieFilters>) => void
   paginatedMovies: Media[]
   filteredMoviesCount: number
   currentPage: number
@@ -25,8 +27,8 @@ export function useHomeMovies(movies: Media[]): UseHomeMoviesResult {
   const [searchFilters, setSearchFilters] = useState<SearchFilters>({ movie: '' })
   const [otherFilters, setOtherFilters] = useState<MovieFilters>({
     duracao: '',
-    lancamentoInicio: '',
-    lancamentoFim: '',
+    lancamentoInicio: undefined,
+    lancamentoFim: undefined,
     generos: [],
   })
   const [currentPage, setCurrentPage] = useState(1)
@@ -35,7 +37,7 @@ export function useHomeMovies(movies: Media[]): UseHomeMoviesResult {
     return (
       filterMoviesByTitle(filterMoviesByOtherFields(movies, otherFilters), searchFilters.movie)
     )
-  }, [movies, searchFilters.movie])
+  }, [movies, otherFilters, searchFilters.movie])
 
   const totalPages = useMemo(() => {
     return Math.max(1, Math.ceil(filteredMovies.length / MOVIES_PER_PAGE))
@@ -43,7 +45,7 @@ export function useHomeMovies(movies: Media[]): UseHomeMoviesResult {
 
   useEffect(() => {
     setCurrentPage(1)
-  }, [searchFilters.movie])
+  }, [searchFilters.movie, otherFilters])
 
   useEffect(() => {
     if (currentPage > totalPages) {
@@ -60,6 +62,10 @@ export function useHomeMovies(movies: Media[]): UseHomeMoviesResult {
     searchValue: searchFilters.movie,
     onSearchChange: (value) => {
       setSearchFilters((current) => ({ ...current, movie: value }))
+    },
+    otherFilters,
+    onOtherFiltersChange: (nextFilters) => {
+      setOtherFilters((current) => ({ ...current, ...nextFilters }))
     },
     paginatedMovies,
     filteredMoviesCount: filteredMovies.length,

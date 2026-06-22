@@ -16,11 +16,21 @@ type ModalBaseProps = {
     description?: string,
     children: ReactNode,
     footerContent?: ReactNode,
+    open?: boolean,
+    onOpenChange?: (open: boolean) => void,
 }
 
-export function ModalBase({ trigger, title, description, children, footerContent }: ModalBaseProps) {
+export function ModalBase({
+    trigger,
+    title,
+    description,
+    children,
+    footerContent,
+    open,
+    onOpenChange,
+}: ModalBaseProps) {
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogTrigger asChild>
                 {trigger}
             </DialogTrigger>

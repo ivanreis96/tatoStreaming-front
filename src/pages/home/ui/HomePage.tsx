@@ -8,6 +8,8 @@ export function HomePage() {
   const {
     searchValue,
     onSearchChange,
+    otherFilters,
+    onOtherFiltersChange,
     paginatedMovies,
     currentPage,
     totalPages,
@@ -23,6 +25,8 @@ export function HomePage() {
       <ToolsBar
         searchValue={searchValue}
         onSearchChange={onSearchChange}
+        otherFilters={otherFilters}
+        onOtherFiltersChange={onOtherFiltersChange}
       />
       
       <MovieList movies={paginatedMovies} />

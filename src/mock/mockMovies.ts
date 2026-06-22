@@ -266,3 +266,15 @@ export const mockMovies: Media[] = [
     teaserUrl: 'https://www.youtube.com/watch?v=s9APLXM9Ei8',
   },
 ]
+
+export const mockGenres: string[] = [
+  'Ação',
+  'Aventura',
+  'Comédia',
+  'Crime',
+  'Drama',
+  'Ficção científica',
+  'Histórico',
+  'Mistério',
+  'Suspense',
+]

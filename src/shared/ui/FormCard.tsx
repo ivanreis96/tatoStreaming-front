@@ -9,8 +9,8 @@ export type FormCardProps = {
 export function FormCard(Props: FormCardProps) {
     return (
 
-        <div className={cn("w-100 max-w-[412px] flex-initial radius-sm bg-card h-auto flex-center-center", Props.customClasses)} {...Props} >
+        <form className={cn("w-100 max-w-[412px] flex-initial radius-sm bg-card h-auto flex-center-center", Props.customClasses)} {...Props} >
             {Props.children}
-        </div>
+        </form>
     )
 }

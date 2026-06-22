@@ -1,6 +1,11 @@
 import type { Media } from '@/entities/media'
 import type { MovieFilters } from './types'
 
+function parseMovieDate(lancamento: string): Date {
+    const [dia, mes, ano] = lancamento.split('/').map(Number)
+    return new Date(ano, mes - 1, dia)
+}
+
 export function filterMoviesByOtherFields(movies: Media[], fieldsFilter: MovieFilters): Media[] {
     return movies.filter((movie) => {
         const matchesDuracao = fieldsFilter.duracao
@@ -13,19 +18,14 @@ export function filterMoviesByOtherFields(movies: Media[], fieldsFilter: MovieFi
 
         let matchesLancamento = true;
         if (fieldsFilter.lancamentoInicio || fieldsFilter.lancamentoFim) {
-            const [dia, mes, ano] = movie.lancamento.split("/");
-            const dataLancamento = new Date(`${ano}-${mes}-${dia}`);
+            const dataLancamento = parseMovieDate(movie.lancamento)
             let inicioOk = true;
             let fimOk = true;
             if (fieldsFilter.lancamentoInicio) {
-                const [di, mi, ai] = fieldsFilter.lancamentoInicio.split("/");
-                const dataInicio = new Date(`${ai}-${mi}-${di}`);
-                inicioOk = dataLancamento >= dataInicio;
+                inicioOk = dataLancamento >= fieldsFilter.lancamentoInicio
             }
             if (fieldsFilter.lancamentoFim) {
-                const [df, mf, af] = fieldsFilter.lancamentoFim.split("/");
-                const dataFim = new Date(`${af}-${mf}-${df}`);
-                fimOk = dataLancamento <= dataFim;
+                fimOk = dataLancamento <= fieldsFilter.lancamentoFim
             }
             matchesLancamento = inicioOk && fimOk;
         }
