@@ -1,10 +1,6 @@
 import type { Media } from '@/entities/media'
 import type { MovieFilters } from './types'
-
-function parseMovieDate(lancamento: string): Date {
-    const [dia, mes, ano] = lancamento.split('/').map(Number)
-    return new Date(ano, mes - 1, dia)
-}
+import { parseDateOnly } from '@/shared'
 
 export function filterMoviesByOtherFields(movies: Media[], fieldsFilter: MovieFilters): Media[] {
     return movies.filter((movie) => {
@@ -18,7 +14,7 @@ export function filterMoviesByOtherFields(movies: Media[], fieldsFilter: MovieFi
 
         let matchesLancamento = true;
         if (fieldsFilter.lancamentoInicio || fieldsFilter.lancamentoFim) {
-            const dataLancamento = parseMovieDate(movie.lancamento)
+            const dataLancamento = parseDateOnly(movie.lancamento)
             let inicioOk = true;
             let fimOk = true;
             if (fieldsFilter.lancamentoInicio) {
