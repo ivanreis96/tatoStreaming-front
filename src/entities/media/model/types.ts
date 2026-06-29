@@ -1,7 +1,8 @@
 export type MediaKind = 'movie' | 'series'
 
 export type Media = {
-  id: string         
+  id: string
+  createdBy: string
   titulo: string
   tituloOriginal: string
   subtitulo: string

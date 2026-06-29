@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { SearchMovieInput } from '@/features/search'
 import style from '../toolbar.module.css'
-import { ModalBase } from '@/shared'
+import { ModalBase, SheetBase } from '@/shared'
 import { FilterFooter } from '@/features/movieFilters'
 import { MovieFiltersContent } from '@/features/movieFilters'
 import type { MovieFilters } from '@/features/movieFilters'
@@ -77,15 +77,18 @@ export function ToolsBar({
             <ModalBase
                 open={isFilterModalOpen}
                 onOpenChange={handleModalOpenChange}
-                trigger={filterButton()} 
-                title={'Filtrar filme'} 
-                children={<MovieFiltersContent otherFilters={draftFilters} onOtherFiltersChange={handleDraftFiltersChange} />} 
+                trigger={filterButton()}
+                title={'Filtrar filme'}
+                children={<MovieFiltersContent otherFilters={draftFilters} onOtherFiltersChange={handleDraftFiltersChange} />}
                 footerContent={<FilterFooter onClearFilters={handleClearFilters} onApplyFilters={handleApplyFilters} />}
             />
 
-            <Button variant="default" size="sm">
-                Adicionar filme
-            </Button>
+            <SheetBase
+                buttonTrigger={<Button variant="default" size="sm">Adicionar filme</Button>}
+                title={'Adicionar Filme'}
+                side={'right'}
+                children={<div>Conteúdo do sheet</div>}
+            />
         </div>
     )
 }

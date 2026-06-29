@@ -3,6 +3,7 @@ import type { Media } from "@/entities/media";
 export const mockMovies: Media[] = [
   {
     id: '1',
+    createdBy: 'user-1',
     titulo: 'Interstellar',
     tituloOriginal: 'Interstellar',
     subtitulo: 'A journey through space and time.',
@@ -25,6 +26,7 @@ export const mockMovies: Media[] = [
   },
   {
     id: '2',
+    createdBy: 'user-1',
     titulo: 'Inception',
     tituloOriginal: 'Inception',
     subtitulo: 'Dreams inside dreams.',
@@ -47,6 +49,7 @@ export const mockMovies: Media[] = [
   },
   {
     id: '3',
+    createdBy: 'user-1',
     titulo: 'The Matrix',
     tituloOriginal: 'The Matrix',
     subtitulo: 'Reality is not what it seems.',
@@ -69,6 +72,7 @@ export const mockMovies: Media[] = [
   },
   {
     id: '4',
+    createdBy: 'user-1',
     titulo: 'Twin peaks',
     tituloOriginal: 'Twin Peaks',
     subtitulo: 'Cuidado com as corujas',
@@ -91,6 +95,7 @@ export const mockMovies: Media[] = [
   },
   {
     id: '5',
+    createdBy: 'user-1',
     titulo: 'Vingadores: Endgame',
     tituloOriginal: 'Avengers: Endgame',
     subtitulo: 'O desfecho da saga do infinito.',
@@ -113,6 +118,7 @@ export const mockMovies: Media[] = [
   },
   {
     id: '6',
+    createdBy: 'user-1',
     titulo: 'Clube da Luta',
     tituloOriginal: 'Fight Club',
     subtitulo: 'Uma crítica intensa ao consumo e à identidade.',
@@ -135,6 +141,7 @@ export const mockMovies: Media[] = [
   },
   {
     id: '7',
+    createdBy: 'user-1',
     titulo: 'Coringa',
     tituloOriginal: 'Joker',
     subtitulo: 'O nascimento de um ícone do caos.',
@@ -157,6 +164,7 @@ export const mockMovies: Media[] = [
   },
   {
     id: '8',
+    createdBy: 'user-2',
     titulo: 'Duna',
     tituloOriginal: 'Dune',
     subtitulo: 'Destino, areia e poder em Arrakis.',
@@ -179,6 +187,7 @@ export const mockMovies: Media[] = [
   },
   {
     id: '9',
+    createdBy: 'user-2',
     titulo: 'Parasita',
     tituloOriginal: 'Parasite',
     subtitulo: 'Uma sátira afiada sobre desigualdade social.',
@@ -201,6 +210,7 @@ export const mockMovies: Media[] = [
   },
   {
     id: '10',
+    createdBy: 'user-2',
     titulo: 'Batman: O Cavaleiro das Trevas',
     tituloOriginal: 'The Dark Knight',
     subtitulo: 'O caos encontra seu maior palco em Gotham.',
@@ -223,6 +233,7 @@ export const mockMovies: Media[] = [
   },
   {
     id: '11',
+    createdBy: 'user-2',
     titulo: 'Breaking Bad',
     tituloOriginal: 'Breaking Bad',
     subtitulo: 'A transformação de um homem comum.',
@@ -245,6 +256,7 @@ export const mockMovies: Media[] = [
   },
   {
     id: '12',
+    createdBy: 'user-2',
     titulo: 'Chernobyl',
     tituloOriginal: 'Chernobyl',
     subtitulo: 'A história de um desastre real.',

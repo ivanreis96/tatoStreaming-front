@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button"
 import {
     Sheet,
-    SheetClose,
     SheetContent,
     SheetDescription,
     SheetFooter,
@@ -10,24 +8,24 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 
-type sheetBaseProps = {
-    ButtonTrigger: React.ReactNode,
+type SheetBaseProps = {
+    buttonTrigger: React.ReactNode,
     side?: "top" | "bottom" | "left" | "right",
     children?: React.ReactNode,
-    description: string,
+    description?: string,
     title: string | React.ReactNode,
     footerContent?: React.ReactNode,
 }
 
-export function SheetBase({ ButtonTrigger, side, children, description, title, footerContent }: sheetBaseProps) {
+export function SheetBase({ buttonTrigger, side, children, description, title, footerContent }: SheetBaseProps) {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                {ButtonTrigger}
+                {buttonTrigger}
             </SheetTrigger>
-            <SheetContent
+            <SheetContent                
                 side={side}
-                className="data-[side=bottom]:max-h-[50vh] data-[side=top]:max-h-[50vh]"
+                className="data-[side=bottom]:max-h-[50vh] data-[side=top]:max-h-[50vh] bg-dialog !max-w-[565px] "
             >
                 <SheetHeader>
                     <SheetTitle>{title}</SheetTitle>
