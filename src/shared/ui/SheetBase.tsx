@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/sheet"
 
 type SheetBaseProps = {
+    open?: boolean,
+    onOpenChange?: (open: boolean) => void,
     buttonTrigger: React.ReactNode,
     side?: "top" | "bottom" | "left" | "right",
     children?: React.ReactNode,
@@ -17,9 +19,18 @@ type SheetBaseProps = {
     footerContent?: React.ReactNode,
 }
 
-export function SheetBase({ buttonTrigger, side, children, description, title, footerContent }: SheetBaseProps) {
+export function SheetBase({
+    open,
+    onOpenChange,
+    buttonTrigger,
+    side,
+    children,
+    description,
+    title,
+    footerContent,
+}: SheetBaseProps) {
     return (
-        <Sheet>
+        <Sheet open={open} onOpenChange={onOpenChange}>
             <SheetTrigger asChild>
                 {buttonTrigger}
             </SheetTrigger>
@@ -37,7 +48,7 @@ export function SheetBase({ buttonTrigger, side, children, description, title, f
                             : null
                     }
                 </SheetHeader>
-                <div>
+                <div className="flex-1 min-h-0 overflow-y-auto">
                     {children}
                 </div>
                 {footerContent ?

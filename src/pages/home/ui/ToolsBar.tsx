@@ -5,7 +5,9 @@ import { ModalBase, SheetBase } from '@/shared'
 import { FilterFooter } from '@/features/movieFilters'
 import { MovieFiltersContent } from '@/features/movieFilters'
 import type { MovieFilters } from '@/features/movieFilters'
+import { AddMovieContent, AddMovieFooter, useAddMovieForm } from '@/features/addMovie'
 import { useState } from 'react'
+import { mockCurrentUser } from '@/mock/mockUsers'
 
 type ToolsBarProps = {
     searchValue: string
@@ -45,7 +47,19 @@ export function ToolsBar({
     onOtherFiltersChange,
 }: ToolsBarProps) {
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
+    const [isAddMovieSheetOpen, setIsAddMovieSheetOpen] = useState(false)
     const [draftFilters, setDraftFilters] = useState<MovieFilters>(() => cloneMovieFilters(otherFilters))
+    const {
+        form,
+        releaseDate,
+        lucro,
+        onFieldChange,
+        onKindChange,
+        onGenreChange,
+        onReleaseDateChange,
+        resetForm,
+        createMediaFromForm,
+    } = useAddMovieForm()
 
     const handleModalOpenChange = (open: boolean) => {
         setIsFilterModalOpen(open)
@@ -70,6 +84,26 @@ export function ToolsBar({
         setDraftFilters(clearedFilters)
     }
 
+    const handleAddMovieSheetOpenChange = (open: boolean) => {
+        setIsAddMovieSheetOpen(open)
+
+        if (!open) {
+            resetForm()
+        }
+    }
+
+    const handleCloseAddMovieFields = () => {
+        resetForm()
+        setIsAddMovieSheetOpen(false)
+    }
+
+    const handleCreateMovie = () => {
+        const nextMovie = createMediaFromForm({ createdBy: mockCurrentUser.id })
+        console.log('Novo filme criado (mock):', nextMovie)
+        setIsAddMovieSheetOpen(false)
+        resetForm()
+    }
+
     return (
         <div className={style['tools-bar']}>
             <SearchMovieInput value={searchValue} onChange={onSearchChange} />
@@ -79,15 +113,42 @@ export function ToolsBar({
                 onOpenChange={handleModalOpenChange}
                 trigger={filterButton()}
                 title={'Filtrar filme'}
-                children={<MovieFiltersContent otherFilters={draftFilters} onOtherFiltersChange={handleDraftFiltersChange} />}
-                footerContent={<FilterFooter onClearFilters={handleClearFilters} onApplyFilters={handleApplyFilters} />}
+                children={
+                    <MovieFiltersContent
+                        otherFilters={draftFilters}
+                        onOtherFiltersChange={handleDraftFiltersChange}
+                    />}
+                footerContent={
+                    <FilterFooter
+                        onClearFilters={handleClearFilters}
+                        onApplyFilters={handleApplyFilters}
+                    />
+                }
             />
 
             <SheetBase
+                open={isAddMovieSheetOpen}
+                onOpenChange={handleAddMovieSheetOpenChange}
                 buttonTrigger={<Button variant="default" size="sm">Adicionar filme</Button>}
                 title={'Adicionar Filme'}
                 side={'right'}
-                children={<div>Conteúdo do sheet</div>}
+                children={
+                    <AddMovieContent
+                        form={form}
+                        releaseDate={releaseDate}
+                        lucro={lucro}
+                        onFieldChange={onFieldChange}
+                        onKindChange={onKindChange}
+                        onGenreChange={onGenreChange}
+                        onReleaseDateChange={onReleaseDateChange}
+                    />
+                }
+                footerContent={
+                    <AddMovieFooter
+                        onCloseFields={handleCloseAddMovieFields}
+                        onCreateMovie={handleCreateMovie}
+                    />
+                }
             />
         </div>
     )
