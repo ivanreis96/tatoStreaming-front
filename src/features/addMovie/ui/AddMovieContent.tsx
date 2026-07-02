@@ -73,7 +73,7 @@ export function AddMovieContent({
                     <FieldLabel className="text-muted" htmlFor="sinopse">Sinopse</FieldLabel>
                     <Textarea
                         id="sinopse"
-                        placeholder="Descreva a sinopse do filme ou serie"
+                        placeholder="Descreva a sinopse do filme ou série"
                         value={form.sinopse}
                         onChange={(event) => handleFieldChange('sinopse', event.target.value)}
                     />
@@ -82,33 +82,35 @@ export function AddMovieContent({
 
             <div className="text-base text-muted">Tipo e lançamento</div>
             <FieldGroup className="flex-row flex-1 gap-2 flex-wrap w-full">
-                <Field orientation="horizontal" className="w-auto">
-                    <Checkbox
-                        id="kind-movie"
-                        checked={form.kind === 'movie'}
-                        onCheckedChange={(checked) => {
-                            if (checked === true) {
-                                onKindChange('movie')
-                            }
-                        }}
-                    />
-                    <Label className="text-muted" htmlFor="kind-movie">Filme</Label>
-                </Field>
+                <FieldGroup className="w-auto flex-1 flex-wrap flex-column gap-4">
+                    <Field orientation="horizontal" className="w-full">
+                        <Checkbox
+                            id="kind-movie"
+                            checked={form.kind === 'movie'}
+                            onCheckedChange={(checked) => {
+                                if (checked === true) {
+                                    onKindChange('movie')
+                                }
+                            }}
+                        />
+                        <Label className="text-muted" htmlFor="kind-movie">Filme</Label>
+                    </Field>
 
-                <Field orientation="horizontal" className="w-auto">
-                    <Checkbox
-                        id="kind-series"
-                        checked={form.kind === 'series'}
-                        onCheckedChange={(checked) => {
-                            if (checked === true) {
-                                onKindChange('series')
-                            }
-                        }}
-                    />
-                    <Label className="text-muted" htmlFor="kind-series">Série</Label>
-                </Field>
+                    <Field orientation="horizontal" className="w-full">
+                        <Checkbox
+                            id="kind-series"
+                            checked={form.kind === 'series'}
+                            onCheckedChange={(checked) => {
+                                if (checked === true) {
+                                    onKindChange('series')
+                                }
+                            }}
+                        />
+                        <Label className="text-muted" htmlFor="kind-series">Série</Label>
+                    </Field>
+                </FieldGroup>
 
-                <Field className="flex-1 min-w-[220px]">
+                <Field className="flex-2 min-w-[220px]">
                     <FieldLabel className="text-muted" htmlFor="lancamento">Data de lançamento</FieldLabel>
                     <DatePicker
                         date={releaseDate}
