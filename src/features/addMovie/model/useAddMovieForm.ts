@@ -87,7 +87,7 @@ export function useAddMovieForm(initialData: AddMovieFormData = INITIAL_ADD_MOVI
         setForm((current) => {
             const nextGenres = checked === true
                 ? [...current.generos, genre]
-                : current.generos.filter((item) => item !== genre)
+                : current.generos.filter((item: string) => item !== genre)
 
             return { ...current, generos: nextGenres }
         })

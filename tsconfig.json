@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
+      "@tato-streaming/shared": ["../shared/dist/index.js"],
       "@/*": ["./src/*"]
     }
   },

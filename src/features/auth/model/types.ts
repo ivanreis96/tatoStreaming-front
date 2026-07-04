@@ -1,5 +1,1 @@
-export type AuthSession = {
-  accessToken: string
-  refreshToken: string
-  expiresAt: string
-}
+export type { AuthSession } from '../../../../../../shared/dist/index.js'

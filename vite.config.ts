@@ -16,6 +16,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@tato-streaming/shared': path.resolve(__dirname, '../shared/dist/index.js'),
     },
   },
 })

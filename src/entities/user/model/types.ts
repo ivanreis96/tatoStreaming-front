@@ -1,6 +1,1 @@
-export type UserProfile = {
-  id: string
-  displayName: string
-  email: string
-  avatarUrl?: string
-}
+export type { UserProfile } from '../../../../../../shared/dist/index.js'

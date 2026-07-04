@@ -13,6 +13,7 @@
     "@fontsource-variable/geist": "^5.2.8",
     "@fontsource/montserrat": "^5.2.8",
     "@fontsource/roboto": "^5.2.10",
+    "@tato-streaming/shared": "file:../shared",
     "@radix-ui/colors": "^3.0.0",
     "@reduxjs/toolkit": "^2.11.2",
     "class-variance-authority": "^0.7.1",
