@@ -1,17 +1,17 @@
 # Tato Streaming - Frontend
 
-Aplicacao web do projeto Tato Streaming, construida com React + Vite + TypeScript.
+Aplicação web do projeto Tato Streaming, construída com React + Vite + TypeScript.
 
 ## Contexto do Projeto
 
-Este repositorio representa a camada de interface (UI) da aplicacao. Hoje, parte do fluxo ainda usa dados mockados para acelerar desenvolvimento de telas e experiencia.
+Este repositório representa a camada de interface (UI) da aplicação. Hoje, parte do fluxo ainda usa dados mockados para acelerar desenvolvimento de telas e experiência.
 
 No workspace maior, este frontend se relaciona com:
 
-- `../back/tatoStreaming-back`: API NestJS com autenticacao, usuarios e midias.
-- `../shared`: pacote compartilhado para contratos e schemas (tipos e validacoes).
+- `../back/tatoStreaming-back`: API NestJS com autenticação, usuários e mídias.
+- `../shared`: pacote compartilhado para contratos e schemas (tipos e validações).
 
-Mesmo quando algum fluxo esta mockado no front, a estrutura ja esta preparada para consumo de API via `src/shared/api/httpClient.ts` e URL base em `src/shared/config/env.ts`.
+Mesmo quando algum fluxo está mockado no front, a estrutura já está preparada para consumo de API via `src/shared/api/httpClient.ts` e URL base em `src/shared/config/env.ts`.
 
 ## Stack
 
@@ -29,9 +29,9 @@ Mesmo quando algum fluxo esta mockado no front, a estrutura ja esta preparada pa
 
 ## Setup Passo a Passo
 
-### 1) Build do pacote shared (obrigatorio para workspace local)
+### 1) Build do pacote shared (obrigatório para workspace local)
 
-Este projeto declara dependencia local para `@tato-streaming/shared` usando `file:../shared`.
+Este projeto declara dependência local para `@tato-streaming/shared` usando `file:../shared`.
 
 No terminal, a partir da pasta raiz do workspace (`tato-streaming`):
 
@@ -41,14 +41,14 @@ npm install
 npm run build
 ```
 
-### 2) Instalar dependencias do front
+### 2) Instalar dependências do front
 
 ```bash
 cd ../front/tatoStreaming-front
 npm install
 ```
 
-### 3) Configurar variavel de ambiente (opcional, mas recomendado)
+### 3) Configurar variável de ambiente (opcional, mas recomendado)
 
 Crie um arquivo `.env.local` em `tatoStreaming-front`:
 
@@ -56,10 +56,10 @@ Crie um arquivo `.env.local` em `tatoStreaming-front`:
 VITE_API_BASE_URL=http://localhost:3000
 ```
 
-Observacao:
+Observação:
 
-- Se nao configurar, o projeto usa `http://localhost:3000` por padrao.
-- O backend usa prefixo global `/api`, entao as chamadas do front devem considerar esse prefixo no caminho da requisicao.
+- Se não configurar, o projeto usa `http://localhost:3000` por padrão.
+- O backend usa prefixo global `/api`, então as chamadas do front devem considerar esse prefixo no caminho da requisição.
 
 ### 4) Rodar em modo desenvolvimento
 
@@ -67,20 +67,20 @@ Observacao:
 npm run dev
 ```
 
-Aplicacao disponivel em: `http://localhost:5173` (porta padrao do Vite).
+Aplicação disponível em: `http://localhost:5173` (porta padrão do Vite).
 
 ## Scripts Principais
 
 - `npm run dev`: sobe servidor de desenvolvimento.
-- `npm run build`: gera build de producao.
+- `npm run build`: gera build de produção.
 - `npm run preview`: serve build localmente.
 - `npm run lint`: executa lint.
 
-## Integracao com as Outras Partes
+## Integração com as Outras Partes
 
-- Frontend consome a API do backend para fluxos de autenticacao e midias.
-- Contratos compartilhados podem ser centralizados no pacote `shared` para evitar divergencia de tipos/validacoes entre front e back.
-- Em desenvolvimento, e comum iniciar nesta ordem:
+- Frontend consome a API do backend para fluxos de autenticação e mídias.
+- Contratos compartilhados podem ser centralizados no pacote `shared` para evitar divergência de tipos/validações entre front e back.
+- Em desenvolvimento, é comum iniciar nesta ordem:
   1. `shared` (build)
   2. `back` (API)
   3. `front` (UI)
@@ -88,7 +88,7 @@ Aplicacao disponivel em: `http://localhost:5173` (porta padrao do Vite).
 ## Status Atual
 
 - Rotas principais: `/`, `/login`, `/cadastro`.
-- Existe inicializacao de autenticacao mock no provider.
-- Lista de filmes da home ainda esta conectada a dados mockados.
+- Existe inicialização de autenticação mock no provider.
+- Lista de filmes da home ainda está conectada a dados mockados.
 
-Isso facilita evoluir UI/UX enquanto a integracao backend e expandida gradualmente.
+Isso facilita evoluir UI/UX enquanto a integração backend é expandida gradualmente.
