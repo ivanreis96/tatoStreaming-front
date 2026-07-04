@@ -6,11 +6,10 @@ export type FormCardProps = {
     customClasses?: string | string[];
 }
 
-export function FormCard(Props: FormCardProps) {
+export function FormCard({ children, customClasses }: FormCardProps) {
     return (
-
-        <form className={cn("w-100 max-w-[412px] flex-initial radius-sm bg-card h-auto flex-center-center", Props.customClasses)} {...Props} >
-            {Props.children}
-        </form>
+        <section className={cn("w-100 max-w-[412px] flex-initial radius-sm bg-card h-auto flex-center-center", customClasses)}>
+            {children}
+        </section>
     )
 }
