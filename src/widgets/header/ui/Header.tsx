@@ -6,11 +6,11 @@ type HeaderProps = {
   onThemeToggle?: () => void,
   darkMode?: boolean,
   isLoged: boolean,
-  
+  onAuthAction?: () => void,
 }
 
-export function Header({ onThemeToggle, darkMode = true, isLoged }: HeaderProps) {
-  const txtButtonAction = isLoged ? "Login" : "Logout"
+export function Header({ onThemeToggle, darkMode = true, isLoged, onAuthAction }: HeaderProps) {
+  const txtButtonAction = isLoged ? 'Logout' : 'Login'
 
   return (
     <header className="app-header">
@@ -29,9 +29,7 @@ export function Header({ onThemeToggle, darkMode = true, isLoged }: HeaderProps)
         <Button
           size={'lg'}
           variant={"default"}
-          onClick={() => {
-            console.log("clicou")
-          }}
+          onClick={onAuthAction}
         >
           {txtButtonAction}
         </Button>

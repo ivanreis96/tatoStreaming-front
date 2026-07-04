@@ -2,8 +2,12 @@ import { useEffect, type ReactNode } from 'react'
 import { Provider } from 'react-redux'
 import { useAppSelector, useAppDispatch } from './hooks'
 import { store } from './store'
-import { setCurrentUser } from '@/features/auth'
-import { mockCurrentUser } from '@/mock'
+import {
+  clearPersistedAuthSession,
+  hydrateSession,
+  loadPersistedAuthSession,
+  savePersistedAuthSession,
+} from '@/features/auth'
 
 type AppProvidersProps = {
   children: ReactNode
@@ -23,12 +27,39 @@ function ThemeEffect() {
   return null
 }
 
-function MockAuthInit() {
+function AuthSessionInit() {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(setCurrentUser(mockCurrentUser))
+    dispatch(hydrateSession(loadPersistedAuthSession()))
   }, [dispatch])
+
+  return null
+}
+
+function AuthSessionSync() {
+  const authState = useAppSelector((state) => state.auth)
+
+  useEffect(() => {
+    if (
+      authState.status === 'authenticated'
+      && authState.currentUser
+      && authState.accessToken
+      && authState.refreshToken
+    ) {
+      savePersistedAuthSession({
+        user: authState.currentUser,
+        accessToken: authState.accessToken,
+        refreshToken: authState.refreshToken,
+      })
+
+      return
+    }
+
+    if (authState.status === 'unauthenticated') {
+      clearPersistedAuthSession()
+    }
+  }, [authState])
 
   return null
 }
@@ -37,7 +68,8 @@ export function AppProviders({ children }: AppProvidersProps) {
   return (
     <Provider store={store}>
       <ThemeEffect />
-      <MockAuthInit />
+      <AuthSessionInit />
+      <AuthSessionSync />
       {children}
     </Provider>
   )
