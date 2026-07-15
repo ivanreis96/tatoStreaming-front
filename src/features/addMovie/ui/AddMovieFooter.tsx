@@ -2,16 +2,18 @@ import { Button } from "@/components/ui/button"
 
 type AddMovieProps = {
     onCloseFields: () => void
-    onCreateMovie: () => void
+    onCreateMovie: () => void | Promise<void>
+    isSubmitting?: boolean
 }
 
-export function AddMovieFooter ({ onCloseFields, onCreateMovie }: AddMovieProps) {
+export function AddMovieFooter ({ onCloseFields, onCreateMovie, isSubmitting = false }: AddMovieProps) {
     return (
         <div className="w-full flex justify-end gap-4">
             <Button                
                 variant="secondary"
                 size="default"
                 onClick={onCloseFields}
+                disabled={isSubmitting}
             >
                 Cancelar
             </Button>
@@ -19,8 +21,9 @@ export function AddMovieFooter ({ onCloseFields, onCreateMovie }: AddMovieProps)
                 variant="default"
                 size="default"
                 onClick={onCreateMovie}
+                disabled={isSubmitting}
             >
-                Adicionar filme
+                {isSubmitting ? 'Adicionando...' : 'Adicionar filme'}
             </Button> 
         </div>
     )

@@ -7,13 +7,17 @@ import { MovieFiltersContent } from '@/features/movieFilters'
 import type { MovieFilters } from '@/features/movieFilters'
 import { AddMovieContent, AddMovieFooter, useAddMovieForm } from '@/features/addMovie'
 import { useState } from 'react'
-import { mockCurrentUser } from '@/mock/mockUsers'
+import { useAppSelector } from '@/app/providers/hooks'
+import type { Media } from '@/entities/media'
 
 type ToolsBarProps = {
     searchValue: string
     onSearchChange: (value: string) => void
     otherFilters: MovieFilters
     onOtherFiltersChange: (nextFilters: Partial<MovieFilters>) => void
+    onCreateMovie: (movie: Media) => Promise<boolean>
+    isCreatingMovie: boolean
+    createMovieError: string | null
 }
 
 const filterButton = () => {
@@ -45,7 +49,11 @@ export function ToolsBar({
     onSearchChange,
     otherFilters,
     onOtherFiltersChange,
+    onCreateMovie,
+    isCreatingMovie,
+    createMovieError,
 }: ToolsBarProps) {
+    const currentUser = useAppSelector((state) => state.auth.currentUser)
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
     const [isAddMovieSheetOpen, setIsAddMovieSheetOpen] = useState(false)
     const [draftFilters, setDraftFilters] = useState<MovieFilters>(() => cloneMovieFilters(otherFilters))
@@ -97,9 +105,18 @@ export function ToolsBar({
         setIsAddMovieSheetOpen(false)
     }
 
-    const handleCreateMovie = () => {
-        const nextMovie = createMediaFromForm({ createdBy: mockCurrentUser.id })
-        console.log('Novo filme criado (mock):', nextMovie)
+    const handleCreateMovie = async () => {
+        if (!currentUser) {
+            return
+        }
+
+        const nextMovie = createMediaFromForm({ createdBy: currentUser.id })
+        const hasCreated = await onCreateMovie(nextMovie)
+
+        if (!hasCreated) {
+            return
+        }
+
         setIsAddMovieSheetOpen(false)
         resetForm()
     }
@@ -147,9 +164,14 @@ export function ToolsBar({
                     <AddMovieFooter
                         onCloseFields={handleCloseAddMovieFields}
                         onCreateMovie={handleCreateMovie}
+                        isSubmitting={isCreatingMovie}
                     />
                 }
             />
+
+            {createMovieError ? (
+                <span className="text-xs text-destructive">{createMovieError}</span>
+            ) : null}
         </div>
     )
 }
