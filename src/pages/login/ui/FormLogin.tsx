@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input'
 import { useAppDispatch } from '@/app/providers/hooks'
 import { setSession, type LoginDto } from '@/features/auth'
 import { authApi } from '@/shared/api'
+import { getFirstZodError } from '@/shared/lib/zod'
+import { loginSchema } from '../../../../../../shared/src/auth'
 
 export function FormLogin() {
     const dispatch = useAppDispatch()
@@ -15,12 +17,21 @@ export function FormLogin() {
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     const onFieldChange = (field: keyof LoginDto, value: string) => {
+        setErrorMessage(null)
         setForm((current) => ({ ...current, [field]: value }))
     }
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         setErrorMessage(null)
+
+        const validationResult = loginSchema.safeParse(form)
+
+        if (!validationResult.success) {
+            setErrorMessage(getFirstZodError(validationResult.error, 'Revise os dados informados para entrar.'))
+            return
+        }
+
         setIsSubmitting(true)
 
         try {

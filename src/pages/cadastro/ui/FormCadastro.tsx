@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input'
 import { useAppDispatch } from '@/app/providers/hooks'
 import { setSession, type RegisterDto } from '@/features/auth'
 import { authApi } from '@/shared/api'
+import { getFirstZodError } from '@/shared/lib/zod'
+import { registerSchema } from '../../../../../../shared/src/auth'
 
 type RegisterFormState = RegisterDto & {
     confirmPassword: string
@@ -24,6 +26,7 @@ export function FormCadastro() {
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     const onFieldChange = (field: keyof RegisterFormState, value: string) => {
+        setErrorMessage(null)
         setForm((current) => ({ ...current, [field]: value }))
     }
 
@@ -33,6 +36,17 @@ export function FormCadastro() {
 
         if (form.password !== form.confirmPassword) {
             setErrorMessage('As senhas não conferem.')
+            return
+        }
+
+        const validationResult = registerSchema.safeParse({
+            displayName: form.displayName,
+            email: form.email,
+            password: form.password,
+        })
+
+        if (!validationResult.success) {
+            setErrorMessage(getFirstZodError(validationResult.error, 'Revise os dados informados para concluir o cadastro.'))
             return
         }
 

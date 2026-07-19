@@ -58,6 +58,7 @@ export type UseAddMovieFormReturn = {
     onReleaseDateChange: (date: Date | undefined) => void
     resetForm: () => void
     createMediaFromForm: (context: CreateMovieContext) => Media
+    onAddGenresFromInput: (input: string) => void,
 }
 
 export function useAddMovieForm(initialData: AddMovieFormData = INITIAL_ADD_MOVIE_FORM): UseAddMovieFormReturn {
@@ -107,6 +108,22 @@ export function useAddMovieForm(initialData: AddMovieFormData = INITIAL_ADD_MOVI
         return mapAddMovieFormToMedia(form, context)
     }
 
+    const onAddGenresFromInput = (input: string) => {
+        const parsedGenres = input
+            .split(',')
+            .map((genre) => genre.trim())
+            .filter((genre) => genre.length > 0)
+
+        if (parsedGenres.length === 0) {
+            return
+        }
+
+        setForm((current) => {
+            const nextGenres = Array.from(new Set([...current.generos, ...parsedGenres]))
+            return { ...current, generos: nextGenres }
+        })
+    }
+
     return {
         form,
         releaseDate,
@@ -117,5 +134,6 @@ export function useAddMovieForm(initialData: AddMovieFormData = INITIAL_ADD_MOVI
         onReleaseDateChange,
         resetForm,
         createMediaFromForm,
+        onAddGenresFromInput,
     }
 }

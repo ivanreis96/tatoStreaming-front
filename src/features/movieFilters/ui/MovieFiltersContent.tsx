@@ -5,14 +5,14 @@ import type { ReactNode } from "react";
 import type { MovieFilters } from "../model/types";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { mockGenres } from '@/mock/mockMovies'
 
 type MovieFiltersContentProps = {
     otherFilters: MovieFilters
     onOtherFiltersChange: (nextFilters: Partial<MovieFilters>) => void
+    availableGenres: string[]
 }
 
-export function MovieFiltersContent({ otherFilters, onOtherFiltersChange }: MovieFiltersContentProps) {
+export function MovieFiltersContent({ otherFilters, onOtherFiltersChange, availableGenres }: MovieFiltersContentProps) {
 
     const formContent: ReactNode =
         <FieldSet className="w-full">
@@ -50,7 +50,7 @@ export function MovieFiltersContent({ otherFilters, onOtherFiltersChange }: Movi
 
             <div className="text-base text-muted">Gêneros</div>
             <FieldGroup className="flex-row flex-1 gap-4 flex-wrap w-full">
-                {mockGenres.map((genre: string, index: number) => (
+                {availableGenres.map((genre: string, index: number) => (
                     <Field orientation="horizontal" key={index} className="w-auto">
                         <Checkbox
                             checked={otherFilters.generos.includes(genre)}

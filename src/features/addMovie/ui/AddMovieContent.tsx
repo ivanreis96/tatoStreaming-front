@@ -1,12 +1,13 @@
 import { Checkbox } from '@/components/ui/checkbox'
-import { Field, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field'
+import { Field, FieldError, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import type { AddMovieFormData } from '../model/types'
 import type { UseAddMovieFormReturn } from '../model/useAddMovieForm'
-import { mockGenres } from '@/mock/mockMovies'
 import { DatePicker } from '@/shared'
+import { Button } from '@/components/ui/button'
+import { type KeyboardEvent, useMemo, useState } from 'react'
 
 type AddMovieContentProps = Pick<UseAddMovieFormReturn,
     'form' |
@@ -15,8 +16,11 @@ type AddMovieContentProps = Pick<UseAddMovieFormReturn,
     'onFieldChange' |
     'onKindChange' |
     'onGenreChange' |
-    'onReleaseDateChange'
->
+    'onReleaseDateChange' |
+    'onAddGenresFromInput'> & {
+        availableGenres: string[]
+        genreValidationError?: string | null
+    }
 
 export function AddMovieContent({
     form,
@@ -26,10 +30,36 @@ export function AddMovieContent({
     onKindChange,
     onGenreChange,
     onReleaseDateChange,
+    onAddGenresFromInput,
+    availableGenres,
+    genreValidationError,
 }: AddMovieContentProps) {
     const handleFieldChange = (field: keyof AddMovieFormData, value: string) => {
         onFieldChange(field, value)
     }
+
+    const [InputNovosGeneros, setInputNovosGeneros] = useState<string>('')
+    function addNewGenresOnlist(value: string) {
+        onAddGenresFromInput(value)
+        setInputNovosGeneros('')
+    }
+
+    const handleNewGenresKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key !== 'Enter') {
+            return
+        }
+
+        event.preventDefault()
+        addNewGenresOnlist(InputNovosGeneros)
+    }
+
+    const displayGenres: string[] = useMemo(() => {
+        const normalized = [...availableGenres, ...form.generos]
+            .map((genre) => genre.trim())
+            .filter((genre) => genre.length > 0)
+
+        return Array.from(new Set(normalized)).sort((a, b) => a.localeCompare(b, 'pt-BR'))
+    }, [availableGenres, form.generos])
 
     return (
         <FieldSet className="w-full p-4">
@@ -157,7 +187,7 @@ export function AddMovieContent({
 
             <div className="text-base text-muted">Gêneros</div>
             <FieldGroup className="flex-row flex-1 gap-4 flex-wrap w-full">
-                {mockGenres.map((genre, index) => (
+                {displayGenres.map((genre, index) => (
                     <Field orientation="horizontal" key={genre} className="w-auto">
                         <Checkbox
                             checked={form.generos.includes(genre)}
@@ -169,6 +199,31 @@ export function AddMovieContent({
                     </Field>
                 ))}
             </FieldGroup>
+            <FieldGroup className="flex-row flex-1 gap-4 flex-wrap w-full">
+                <Field className="flex-1">
+                    <FieldLabel className="text-muted" htmlFor="popularidade">Digite novo(s) gênero(s)</FieldLabel>
+                    <Input
+                        id="AdicioneGeneroInput"
+                        type="text"
+                        placeholder="Terror, Ação, Comédia"
+                        value={InputNovosGeneros}
+                        onChange={event => setInputNovosGeneros(event.target.value)}
+                        onKeyDown={handleNewGenresKeyDown}
+                    />
+                </Field>
+                <Button
+                    type="button"
+                    className="self-end"
+                    variant="default"
+                    onClick={() => addNewGenresOnlist(InputNovosGeneros)}
+                    value="Adicionar"
+                >
+                    Adicionar
+                </Button>
+            </FieldGroup>
+
+            {genreValidationError ? <FieldError>{genreValidationError}</FieldError> : null}
+
 
             <div className="text-base text-muted">Métricas</div>
             <FieldGroup className="flex-row flex-1 gap-2">

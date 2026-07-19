@@ -81,24 +81,10 @@ export async function createMediaWithFallback(input: CreateMediaInput): Promise<
     }
   }
 
-  try {
-    const movie = await mediaApi.createMedia(input.payload, input.accessToken)
+  const movie = await mediaApi.createMedia(input.payload, input.accessToken)
 
-    return {
-      movie,
-      source: 'api',
-    }
-  } catch (error) {
-    if (!env.useMockMediaFallback) {
-      throw error
-    }
-
-    const movie = createMockMovie(input.payload, input.createdBy)
-    mockMediaStore = [movie, ...mockMediaStore]
-
-    return {
-      movie,
-      source: 'mock',
-    }
+  return {
+    movie,
+    source: 'api',
   }
 }

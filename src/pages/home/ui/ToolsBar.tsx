@@ -9,6 +9,8 @@ import { AddMovieContent, AddMovieFooter, useAddMovieForm } from '@/features/add
 import { useState } from 'react'
 import { useAppSelector } from '@/app/providers/hooks'
 import type { Media } from '@/entities/media'
+import { getFirstZodError } from '@/shared/lib/zod'
+import { createMediaSchema } from '../../../../../../shared/src/media'
 
 type ToolsBarProps = {
     searchValue: string
@@ -18,6 +20,7 @@ type ToolsBarProps = {
     onCreateMovie: (movie: Media) => Promise<boolean>
     isCreatingMovie: boolean
     createMovieError: string | null
+    availableGenres: string[]
 }
 
 const filterButton = () => {
@@ -52,10 +55,12 @@ export function ToolsBar({
     onCreateMovie,
     isCreatingMovie,
     createMovieError,
+    availableGenres,
 }: ToolsBarProps) {
     const currentUser = useAppSelector((state) => state.auth.currentUser)
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
     const [isAddMovieSheetOpen, setIsAddMovieSheetOpen] = useState(false)
+    const [addMovieFormError, setAddMovieFormError] = useState<string | null>(null)
     const [draftFilters, setDraftFilters] = useState<MovieFilters>(() => cloneMovieFilters(otherFilters))
     const {
         form,
@@ -67,6 +72,7 @@ export function ToolsBar({
         onReleaseDateChange,
         resetForm,
         createMediaFromForm,
+        onAddGenresFromInput,
     } = useAddMovieForm()
 
     const handleModalOpenChange = (open: boolean) => {
@@ -94,6 +100,7 @@ export function ToolsBar({
 
     const handleAddMovieSheetOpenChange = (open: boolean) => {
         setIsAddMovieSheetOpen(open)
+        setAddMovieFormError(null)
 
         if (!open) {
             resetForm()
@@ -102,6 +109,7 @@ export function ToolsBar({
 
     const handleCloseAddMovieFields = () => {
         resetForm()
+        setAddMovieFormError(null)
         setIsAddMovieSheetOpen(false)
     }
 
@@ -111,6 +119,15 @@ export function ToolsBar({
         }
 
         const nextMovie = createMediaFromForm({ createdBy: currentUser.id })
+        const { id: _id, createdBy: _createdBy, ...payload } = nextMovie
+        const validationResult = createMediaSchema.safeParse(payload)
+
+        if (!validationResult.success) {
+            setAddMovieFormError(getFirstZodError(validationResult.error, 'Revise os dados informados para adicionar o filme.'))
+            return
+        }
+
+        setAddMovieFormError(null)
         const hasCreated = await onCreateMovie(nextMovie)
 
         if (!hasCreated) {
@@ -134,6 +151,7 @@ export function ToolsBar({
                     <MovieFiltersContent
                         otherFilters={draftFilters}
                         onOtherFiltersChange={handleDraftFiltersChange}
+                        availableGenres={availableGenres}
                     />}
                 footerContent={
                     <FilterFooter
@@ -158,6 +176,9 @@ export function ToolsBar({
                         onKindChange={onKindChange}
                         onGenreChange={onGenreChange}
                         onReleaseDateChange={onReleaseDateChange}
+                        availableGenres={availableGenres}
+                        onAddGenresFromInput={onAddGenresFromInput}
+                        genreValidationError={addMovieFormError}
                     />
                 }
                 footerContent={

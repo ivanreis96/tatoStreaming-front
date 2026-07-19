@@ -41,7 +41,7 @@
   --secondary: var(--purple-a2);
   --secondary-hover: var(--purple-a3);
   --secondary-active: var(--purple-a1);
-  --secondary-disabled: var(--mauve-a3 );
+  --secondary-disabled: var(--mauve-a3);
   --secondary-foreground: rgb(241, 221, 255, 0.98);
   --background: var(--bg);
   --foreground: var(--text);
@@ -157,7 +157,7 @@ body {
 
 .app-content {
   padding: 0px 22px;
-  min-height: calc(100vh - 149px);
+  height: calc(100vh - 149px);
 }
 
 .home-grid {
@@ -182,6 +182,12 @@ body {
 .subtitle {
   color: var(--text);
   font-weight: 600;
+}
+
+@media (max-height: 750px) {
+  .app-content {
+    height: calc(100vh - 162px);
+  }
 }
 
 @media (max-width: 768px) {

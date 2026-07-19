@@ -6,6 +6,7 @@ import { useHomeMovies } from '../model/useHomeMovies'
 import type { Media } from '@/entities/media'
 import { useAppSelector } from '@/app/providers/hooks'
 import { mediaGateway } from '@/shared/api'
+import { BASE_MEDIA_GENRES } from '@/shared'
 
 type MediaSource = 'api' | 'mock'
 
@@ -107,6 +108,13 @@ export function HomePage() {
     return 'Exibindo catálogo em fallback de mock.'
   }, [moviesSource])
 
+  const availableGenres: string[] = useMemo(() => {
+    const normalizedGenres = [...movies.flatMap((movie) => movie.generos), ...BASE_MEDIA_GENRES]
+    .map((genre) => genre.trim()).filter((genre) => genre.length > 0)
+
+    return Array.from(new Set(normalizedGenres)).sort((a, b) => a.localeCompare(b, 'pt-BR'))
+  }, [movies])
+
   return (
     <div className="w-full h-full flex flex-col items-strench justify-start">
       <ToolsBar
@@ -117,6 +125,7 @@ export function HomePage() {
         onCreateMovie={createMovie}
         isCreatingMovie={isCreatingMovie}
         createMovieError={createMovieError}
+        availableGenres={availableGenres}
       />
 
       {sourceMessage ? (
