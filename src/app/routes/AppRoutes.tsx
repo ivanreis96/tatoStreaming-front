@@ -4,6 +4,7 @@ import { useAppSelector } from '../providers/hooks'
 import { HomePage } from '@/pages/home'
 import { LoginPage } from '@/pages/login'
 import { CadastroPage } from '@/pages/cadastro'
+import { MoviePage } from '@/pages/movie'
 
 type GuardProps = {
   children: ReactNode
@@ -62,6 +63,14 @@ export function AppRoutes() {
           <PublicOnlyRoute>
             <CadastroPage />
           </PublicOnlyRoute>
+        )}
+      />
+      <Route
+        path="/movie/:id"
+        element={(
+          <PrivateRoute>
+            <MoviePage />
+          </PrivateRoute>
         )}
       />
     </Routes>
