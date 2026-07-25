@@ -68,6 +68,7 @@ export function ToolsBar({
         lucro,
         onFieldChange,
         onKindChange,
+        onSituacaoChange,
         onGenreChange,
         onReleaseDateChange,
         resetForm,
@@ -174,6 +175,7 @@ export function ToolsBar({
                         lucro={lucro}
                         onFieldChange={onFieldChange}
                         onKindChange={onKindChange}
+                        onSituacaoChange={onSituacaoChange}
                         onGenreChange={onGenreChange}
                         onReleaseDateChange={onReleaseDateChange}
                         availableGenres={availableGenres}

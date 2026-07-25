@@ -1,1 +1,1 @@
-export type { Media, MediaKind } from './model/types'
+export type { Media, MediaKind, MediaSituacao } from './model/types'

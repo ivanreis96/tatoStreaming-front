@@ -1,6 +1,6 @@
-import type { Media, MediaKind } from '@/entities/media'
+import type { Media, MediaKind, MediaSituacao } from '@/entities/media'
 import { format, parseISO } from 'date-fns'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { INITIAL_ADD_MOVIE_FORM, type AddMovieFormData, type CreateMovieContext } from './types'
 
 function generateMovieId() {
@@ -54,6 +54,7 @@ export type UseAddMovieFormReturn = {
     lucro: string
     onFieldChange: (field: keyof AddMovieFormData, value: string) => void
     onKindChange: (kind: MediaKind) => void
+    onSituacaoChange: (situacao: MediaSituacao) => void
     onGenreChange: (genre: string, checked: boolean | 'indeterminate') => void
     onReleaseDateChange: (date: Date | undefined) => void
     resetForm: () => void
@@ -82,6 +83,10 @@ export function useAddMovieForm(initialData: AddMovieFormData = INITIAL_ADD_MOVI
 
     const onKindChange = (kind: MediaKind) => {
         setForm((current) => ({ ...current, kind }))
+    }
+
+    const onSituacaoChange = (situacao: MediaSituacao) => {
+        setForm((current) => ({ ...current, situacao }))
     }
 
     const onGenreChange = (genre: string, checked: boolean | 'indeterminate') => {
@@ -130,6 +135,7 @@ export function useAddMovieForm(initialData: AddMovieFormData = INITIAL_ADD_MOVI
         lucro,
         onFieldChange,
         onKindChange,
+        onSituacaoChange,
         onGenreChange,
         onReleaseDateChange,
         resetForm,

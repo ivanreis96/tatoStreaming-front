@@ -20,7 +20,7 @@ export const INITIAL_ADD_MOVIE_FORM: AddMovieFormData = {
 	rating: '',
 	lancamento: '',
 	duracao: '',
-	situacao: '',
+	situacao: 'lancado',
 	idioma: '',
 	orcamento: '',
 	receita: '',

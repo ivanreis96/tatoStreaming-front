@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import type { AddMovieFormData } from '../model/types'
 import type { UseAddMovieFormReturn } from '../model/useAddMovieForm'
-import { DatePicker } from '@/shared'
+import { CustomSelect, DatePicker } from '@/shared'
 import { Button } from '@/components/ui/button'
 import { type KeyboardEvent, useMemo, useState } from 'react'
 
@@ -15,6 +15,7 @@ type AddMovieContentProps = Pick<UseAddMovieFormReturn,
     'lucro' |
     'onFieldChange' |
     'onKindChange' |
+    'onSituacaoChange' |
     'onGenreChange' |
     'onReleaseDateChange' |
     'onAddGenresFromInput'> & {
@@ -28,6 +29,7 @@ export function AddMovieContent({
     lucro,
     onFieldChange,
     onKindChange,
+    onSituacaoChange,
     onGenreChange,
     onReleaseDateChange,
     onAddGenresFromInput,
@@ -60,6 +62,17 @@ export function AddMovieContent({
 
         return Array.from(new Set(normalized)).sort((a, b) => a.localeCompare(b, 'pt-BR'))
     }, [availableGenres, form.generos])
+
+    const kindValues = [
+        { value: 'movie', label: 'Filme' },
+        { value: "series", label: "Série" }
+    ]
+
+    const situacaoValues = [
+        { value: 'lancado', label: 'Lançado' },
+        { value: "producao", label: "Produção" },
+        { value: "encerrada", label: "Encerrada" }
+    ]
 
     return (
         <FieldSet className="w-full p-4">
@@ -109,37 +122,16 @@ export function AddMovieContent({
                     />
                 </Field>
             </FieldGroup>
-
-            <div className="text-base text-muted">Tipo e lançamento</div>
             <FieldGroup className="flex-row flex-1 gap-2 flex-wrap w-full">
-                <FieldGroup className="w-auto flex-1 flex-wrap flex-column gap-4">
-                    <Field orientation="horizontal" className="w-full">
-                        <Checkbox
-                            id="kind-movie"
-                            checked={form.kind === 'movie'}
-                            onCheckedChange={(checked) => {
-                                if (checked === true) {
-                                    onKindChange('movie')
-                                }
-                            }}
-                        />
-                        <Label className="text-muted" htmlFor="kind-movie">Filme</Label>
-                    </Field>
-
-                    <Field orientation="horizontal" className="w-full">
-                        <Checkbox
-                            id="kind-series"
-                            checked={form.kind === 'series'}
-                            onCheckedChange={(checked) => {
-                                if (checked === true) {
-                                    onKindChange('series')
-                                }
-                            }}
-                        />
-                        <Label className="text-muted" htmlFor="kind-series">Série</Label>
-                    </Field>
-                </FieldGroup>
-
+                <Field className="w-full flex-1">
+                    <FieldLabel className="text-muted" htmlFor="sinopse">Tipo</FieldLabel>
+                    <CustomSelect
+                        listItems={kindValues}
+                        onChange={(value) => onKindChange(value as 'movie' | 'series')}
+                        value={form.kind}
+                        defaultValue="movie"
+                    />
+                </Field>
                 <Field className="flex-2 min-w-[220px]">
                     <FieldLabel className="text-muted" htmlFor="lancamento">Data de lançamento</FieldLabel>
                     <DatePicker
@@ -163,13 +155,12 @@ export function AddMovieContent({
                 </Field>
 
                 <Field className="flex-1">
-                    <FieldLabel className="text-muted" htmlFor="situacao">Situação</FieldLabel>
-                    <Input
-                        id="situacao"
-                        type="text"
-                        placeholder="Ex.: Lancado"
+                    <FieldLabel className="text-muted" htmlFor="sinopse">Situação</FieldLabel>
+                    <CustomSelect
+                        listItems={situacaoValues}
+                        onChange={(value) => onSituacaoChange(value as 'lancado' | 'producao' | 'encerrada')}
+                        defaultValue="lancado"
                         value={form.situacao}
-                        onChange={(event) => handleFieldChange('situacao', event.target.value)}
                     />
                 </Field>
 
@@ -178,7 +169,7 @@ export function AddMovieContent({
                     <Input
                         id="idioma"
                         type="text"
-                        placeholder="Ex.: en-US"
+                        placeholder="Inglês"
                         value={form.idioma}
                         onChange={(event) => handleFieldChange('idioma', event.target.value)}
                     />

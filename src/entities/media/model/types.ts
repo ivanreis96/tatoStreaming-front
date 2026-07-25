@@ -1,1 +1,1 @@
-export type { Media, MediaKind } from '../../../../../../shared/dist/index.js'
+export type { Media, MediaKind, MediaSituacao } from '../../../../../../shared/dist/index.js'
