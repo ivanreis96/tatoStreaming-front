@@ -1,12 +1,14 @@
 import styles from '../MovieList.module.css'
 import type { Media } from '@/entities/media'
 import { MovieCard } from './MovieCard'
+import { memo } from 'react'
 
 type MovieListProps = {
     movies: Media[]
 }
 
-export function MovieList(props: MovieListProps) {
+
+ export const MovieList = memo((props: MovieListProps) => {
     return (
         <div className={styles['movie-content']}>
             {props.movies.length > 0 ? (
@@ -20,4 +22,8 @@ export function MovieList(props: MovieListProps) {
             )}
         </div>
     )
-}
+})
+
+// export function MovieList(props: MovieListProps) {
+//     return ListContent(props)
+// }
