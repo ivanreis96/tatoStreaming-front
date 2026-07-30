@@ -1,7 +1,18 @@
 import type { Media, MediaKind, MediaSituacao } from '@/entities/media'
 import { format, parseISO } from 'date-fns'
-import { useEffect, useMemo, useState } from 'react'
-import { INITIAL_ADD_MOVIE_FORM, type AddMovieFormData, type CreateMovieContext } from './types'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { DEFAULT_MEDIA_ASSET_URLS, INITIAL_ADD_MOVIE_FORM, type AddMovieFormData, type CreateMovieContext } from './types'
+
+function createInitialForm(initialData: AddMovieFormData): AddMovieFormData {
+    return {
+        ...INITIAL_ADD_MOVIE_FORM,
+        ...initialData,
+        posterUrl: initialData.posterUrl || DEFAULT_MEDIA_ASSET_URLS.posterUrl,
+        backgroundUrl: initialData.backgroundUrl || DEFAULT_MEDIA_ASSET_URLS.backgroundUrl,
+        teaserUrl: initialData.teaserUrl || DEFAULT_MEDIA_ASSET_URLS.teaserUrl,
+        generos: [...initialData.generos],
+    }
+}
 
 function generateMovieId() {
     if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
@@ -45,6 +56,9 @@ export function mapAddMovieFormToMedia(form: AddMovieFormData, context: CreateMo
         createdBy: context.createdBy,
         rating: toNumber(form.rating),
         lucro: String(receita - orcamento),
+        posterUrl: form.posterUrl || DEFAULT_MEDIA_ASSET_URLS.posterUrl,
+        backgroundUrl: form.backgroundUrl || DEFAULT_MEDIA_ASSET_URLS.backgroundUrl,
+        teaserUrl: form.teaserUrl || DEFAULT_MEDIA_ASSET_URLS.teaserUrl,
     }
 }
 
@@ -63,8 +77,13 @@ export type UseAddMovieFormReturn = {
 }
 
 export function useAddMovieForm(initialData: AddMovieFormData = INITIAL_ADD_MOVIE_FORM): UseAddMovieFormReturn {
-    const [form, setForm] = useState<AddMovieFormData>(initialData)
+    const [form, setForm] = useState<AddMovieFormData>(() => createInitialForm(initialData))
     const [releaseDate, setReleaseDate] = useState<Date | undefined>(parseReleaseDate(initialData.lancamento))
+
+    useEffect(() => {
+        setForm(createInitialForm(initialData))
+        setReleaseDate(parseReleaseDate(initialData.lancamento))
+    }, [initialData])
 
     const lucro = useMemo(() => {
         const receita = Number(form.receita)
@@ -77,19 +96,19 @@ export function useAddMovieForm(initialData: AddMovieFormData = INITIAL_ADD_MOVI
         return String(receita - orcamento)
     }, [form.orcamento, form.receita])
 
-    const onFieldChange = (field: keyof AddMovieFormData, value: string) => {
+    const onFieldChange = useCallback((field: keyof AddMovieFormData, value: string) => {
         setForm((current) => ({ ...current, [field]: value }))
-    }
+    }, [])
 
-    const onKindChange = (kind: MediaKind) => {
+    const onKindChange = useCallback((kind: MediaKind) => {
         setForm((current) => ({ ...current, kind }))
-    }
+    }, [])
 
-    const onSituacaoChange = (situacao: MediaSituacao) => {
+    const onSituacaoChange = useCallback((situacao: MediaSituacao) => {
         setForm((current) => ({ ...current, situacao }))
-    }
+    }, [])
 
-    const onGenreChange = (genre: string, checked: boolean | 'indeterminate') => {
+    const onGenreChange = useCallback((genre: string, checked: boolean | 'indeterminate') => {
         setForm((current) => {
             const nextGenres = checked === true
                 ? [...current.generos, genre]
@@ -97,23 +116,23 @@ export function useAddMovieForm(initialData: AddMovieFormData = INITIAL_ADD_MOVI
 
             return { ...current, generos: nextGenres }
         })
-    }
+    }, [])
 
-    const onReleaseDateChange = (date: Date | undefined) => {
+    const onReleaseDateChange = useCallback((date: Date | undefined) => {
         setReleaseDate(date)
         onFieldChange('lancamento', date ? format(date, 'yyyy-MM-dd') : '')
-    }
+    }, [onFieldChange])
 
-    const resetForm = () => {
-        setForm(INITIAL_ADD_MOVIE_FORM)
+    const resetForm = useCallback(() => {
+        setForm(createInitialForm(INITIAL_ADD_MOVIE_FORM))
         setReleaseDate(undefined)
-    }
+    }, [])
 
-    const createMediaFromForm = (context: CreateMovieContext) => {
+    const createMediaFromForm = useCallback((context: CreateMovieContext) => {
         return mapAddMovieFormToMedia(form, context)
-    }
+    }, [form])
 
-    const onAddGenresFromInput = (input: string) => {
+    const onAddGenresFromInput = useCallback ((input: string) => {
         const parsedGenres = input
             .split(',')
             .map((genre) => genre.trim())
@@ -127,7 +146,7 @@ export function useAddMovieForm(initialData: AddMovieFormData = INITIAL_ADD_MOVI
             const nextGenres = Array.from(new Set([...current.generos, ...parsedGenres]))
             return { ...current, generos: nextGenres }
         })
-    }
+    }, [])
 
     return {
         form,
