@@ -6,7 +6,7 @@ import { FilterFooter } from '@/features/movieFilters'
 import { MovieFiltersContent } from '@/features/movieFilters'
 import type { MovieFilters } from '@/features/movieFilters'
 import { AddMovieContent, AddMovieFooter, useAddMovieForm } from '@/features/addMovie'
-import { useState } from 'react'
+import { memo, useCallback, useState } from 'react'
 import { useAppSelector } from '@/app/providers/hooks'
 import type { Media } from '@/entities/media'
 import { getFirstZodError } from '@/shared/lib/zod'
@@ -47,7 +47,7 @@ function cloneMovieFilters(filters: MovieFilters): MovieFilters {
     }
 }
 
-export function ToolsBar({
+export const ToolsBar = memo(function ToolsBar({
     searchValue,
     onSearchChange,
     otherFilters,
@@ -76,45 +76,45 @@ export function ToolsBar({
         onAddGenresFromInput,
     } = useAddMovieForm()
 
-    const handleModalOpenChange = (open: boolean) => {
+    const handleModalOpenChange = useCallback((open: boolean) => {
         setIsFilterModalOpen(open)
 
         if (open) {
             setDraftFilters(cloneMovieFilters(otherFilters))
         }
-    }
+    }, [otherFilters])
 
-    const handleDraftFiltersChange = (nextFilters: Partial<MovieFilters>) => {
+    const handleDraftFiltersChange = useCallback((nextFilters: Partial<MovieFilters>) => {
         setDraftFilters((current) => ({ ...current, ...nextFilters }))
-    }
+    }, [])
 
-    const handleApplyFilters = () => {
+    const handleApplyFilters = useCallback(() => {
         onOtherFiltersChange(draftFilters)
         setIsFilterModalOpen(false)
-    }
+    }, [draftFilters, onOtherFiltersChange])
 
-    const handleClearFilters = () => {
+    const handleClearFilters = useCallback(() => {
         const clearedFilters = cloneMovieFilters(EMPTY_MOVIE_FILTERS)
         onOtherFiltersChange(clearedFilters)
         setDraftFilters(clearedFilters)
-    }
+    }, [onOtherFiltersChange])
 
-    const handleAddMovieSheetOpenChange = (open: boolean) => {
+    const handleAddMovieSheetOpenChange = useCallback((open: boolean) => {
         setIsAddMovieSheetOpen(open)
         setAddMovieFormError(null)
 
         if (!open) {
             resetForm()
         }
-    }
+    }, [resetForm])
 
-    const handleCloseAddMovieFields = () => {
+    const handleCloseAddMovieFields = useCallback(() => {
         resetForm()
         setAddMovieFormError(null)
         setIsAddMovieSheetOpen(false)
-    }
+    }, [resetForm])
 
-    const handleCreateMovie = async () => {
+    const handleCreateMovie = useCallback(async () => {
         if (!currentUser) {
             return
         }
@@ -137,7 +137,7 @@ export function ToolsBar({
 
         setIsAddMovieSheetOpen(false)
         resetForm()
-    }
+    }, [currentUser, createMediaFromForm, onCreateMovie, resetForm])
 
     return (
         <div className={style['tools-bar']}>
@@ -197,4 +197,4 @@ export function ToolsBar({
             ) : null}
         </div>
     )
-}
+})

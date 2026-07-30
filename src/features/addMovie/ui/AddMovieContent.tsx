@@ -7,7 +7,7 @@ import type { AddMovieFormData } from '../model/types'
 import type { UseAddMovieFormReturn } from '../model/useAddMovieForm'
 import { CustomSelect, DatePicker } from '@/shared'
 import { Button } from '@/components/ui/button'
-import { type KeyboardEvent, useMemo, useState } from 'react'
+import { memo, type KeyboardEvent, useMemo, useState } from 'react'
 
 type AddMovieContentProps = Pick<UseAddMovieFormReturn,
     'form' |
@@ -23,7 +23,7 @@ type AddMovieContentProps = Pick<UseAddMovieFormReturn,
         genreValidationError?: string | null
     }
 
-export function AddMovieContent({
+export const AddMovieContent = memo(function AddMovieContent({
     form,
     releaseDate,
     lucro,
@@ -318,4 +318,4 @@ export function AddMovieContent({
             </FieldGroup>
         </FieldSet>
     )
-}
+})

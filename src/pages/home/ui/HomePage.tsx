@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { MovieList } from './MovieList'
 import { ToolsBar } from './ToolsBar'
 import { Button } from '@/components/ui/button'
@@ -56,7 +56,7 @@ export function HomePage() {
     }
   }, [])
 
-  const createMovie = async (movie: Media) => {
+  const createMovie = useCallback(async (movie: Media) => {
     if (!authState.accessToken || !authState.currentUser) {
       setCreateMovieError('Sessão inválida. Faça login novamente para adicionar filmes.')
       return false
@@ -83,7 +83,7 @@ export function HomePage() {
     } finally {
       setIsCreatingMovie(false)
     }
-  }
+  }, [authState.accessToken, authState.currentUser?.id])
 
   const {
     searchValue,

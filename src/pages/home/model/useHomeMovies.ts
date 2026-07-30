@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { filterMoviesByTitle } from '@/features/search'
 import type { SearchFilters } from '@/features/search'
 import type { Media } from '@/entities/media'
 import { filterMoviesByOtherFields } from '@/features/movieFilters'
 import type { MovieFilters } from '@/features/movieFilters'
 
-const MOVIES_PER_PAGE = 10
+const MOVIES_PER_PAGE = 20
 
 type UseHomeMoviesResult = {
   searchValue: string
@@ -58,27 +58,35 @@ export function useHomeMovies(movies: Media[]): UseHomeMoviesResult {
     return filteredMovies.slice(startIndex, startIndex + MOVIES_PER_PAGE)
   }, [currentPage, filteredMovies])
 
+  const onSearchChange = useCallback((value: string) => {
+    setSearchFilters((current) => ({ ...current, movie: value }))
+  }, [])
+
+  const onOtherFiltersChange = useCallback((nextFilters: Partial<MovieFilters>) => {
+    setOtherFilters((current) => ({ ...current, ...nextFilters }))
+  }, [])
+
+  const goToPreviousPage = useCallback(() => {
+    setCurrentPage((page) => Math.max(1, page - 1))
+  }, [])
+
+  const goToNextPage = useCallback(() => {
+    setCurrentPage((page) => Math.min(totalPages, page + 1))
+  }, [totalPages])
+
   return {
     searchValue: searchFilters.movie,
-    onSearchChange: (value) => {
-      setSearchFilters((current) => ({ ...current, movie: value }))
-    },
+    onSearchChange,
     otherFilters,
-    onOtherFiltersChange: (nextFilters) => {
-      setOtherFilters((current) => ({ ...current, ...nextFilters }))
-    },
+    onOtherFiltersChange,
     paginatedMovies,
     filteredMoviesCount: filteredMovies.length,
     currentPage,
     totalPages,
     canGoToPreviousPage: currentPage > 1,
     canGoToNextPage: currentPage < totalPages,
-    goToPreviousPage: () => {
-      setCurrentPage((page) => Math.max(1, page - 1))
-    },
-    goToNextPage: () => {
-      setCurrentPage((page) => Math.min(totalPages, page + 1))
-    },
+    goToPreviousPage,
+    goToNextPage,
     showPagination: filteredMovies.length > MOVIES_PER_PAGE,
   }
 }
