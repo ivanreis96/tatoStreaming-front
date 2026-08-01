@@ -1,17 +1,14 @@
 # Tato Streaming - Frontend
 
-Aplicação web do projeto Tato Streaming, construída com React + Vite + TypeScript.
+Aplicação web do ecossistema Tato Streaming, construída com React + Vite + TypeScript.
 
-## Contexto do Projeto
+## Visão Geral
 
-Este repositório representa a camada de interface (UI) da aplicação. Hoje, parte do fluxo ainda usa dados mockados para acelerar desenvolvimento de telas e experiência.
+Este repositório representa a camada de interface (UI) e já está integrado com a API para os fluxos principais de autenticação e catálogo.
 
-No workspace maior, este frontend se relaciona com:
-
-- `../back/tatoStreaming-back`: API NestJS com autenticação, usuários e mídias.
-- `../shared`: pacote compartilhado para contratos e schemas (tipos e validações).
-
-Mesmo quando algum fluxo está mockado no front, a estrutura já está preparada para consumo de API via `src/shared/api/httpClient.ts` e URL base em `src/shared/config/env.ts`.
+Relações no workspace:
+- `../back/tatoStreaming-back`: API NestJS.
+- `../shared`: contratos (schemas e tipos) compartilhados.
 
 ## Stack
 
@@ -22,21 +19,52 @@ Mesmo quando algum fluxo está mockado no front, a estrutura já está preparada
 - React Router
 - Tailwind CSS
 
+## Mapa de Implementação (status real)
+
+### Fase 1 - Base do app
+
+- Concluído: shell com `Header`, `Footer`, `main` e roteamento principal.
+- Concluído: tema claro/escuro com persistência em `localStorage` (`app-theme`).
+- Concluído: store Redux com slices de `theme` e `auth`.
+
+### Fase 2 - Autenticação
+
+- Concluído: telas de login e cadastro com validação e integração com API.
+- Concluído: persistência de sessão em `localStorage` (`app-auth-session`).
+- Concluído: rotas protegidas (`/` e `/movie/:id`) e rotas públicas condicionais (`/login`, `/cadastro`).
+- Parcial: existe endpoint de refresh no backend, mas o front ainda não faz renovação automática do token via interceptor/fila de retry.
+
+### Fase 3 - Catálogo e Home
+
+- Concluído: listagem da home via API com fallback para mock (`mediaGateway`).
+- Concluído: busca por título, filtros (data, duração, gêneros) e paginação.
+- Concluído: formulário de adicionar filme (sheet lateral) com validação Zod antes do envio.
+- Concluído: opção de rodar 100% em mock via variável de ambiente.
+
+### Fase 4 - Detalhe de filme
+
+- Concluído: página de detalhe (`/movie/:id`) com carregamento por id.
+- Concluído: exibição de trailer com embed de YouTube (`YouTubeEmbed`).
+- Concluído: tracker circular para rating (`CircularTracker`).
+- Concluído: botão **Deletar** com confirmação e chamada de `DELETE /api/media/:id`.
+- Concluído: botão **Editar** com sheet lateral e o mesmo formulário padrão de AddMovie (`AddMovieContent`), salvando via `PATCH /api/media/:id`.
+
+### Fase 5 - Qualidade e hardening
+
+- Pendente: testes automatizados de interface (unit/integration/e2e).
+- Pendente: estratégia automática de refresh token no front.
+
 ## Requisitos
 
-- Node.js 20+ (recomendado)
-- npm 10+ (recomendado)
+- Node.js 20+
+- npm 10+
 
-## Setup Passo a Passo
+## Setup Local
 
-### 1) Build do pacote shared (obrigatório para workspace local)
-
-Este projeto declara dependência local para `@tato-streaming/shared` usando `file:../shared`.
-
-No terminal, a partir da pasta raiz do workspace (`tato-streaming`):
+### 1) Build do pacote shared
 
 ```bash
-cd shared
+cd ../shared
 npm install
 npm run build
 ```
@@ -48,47 +76,38 @@ cd ../front/tatoStreaming-front
 npm install
 ```
 
-### 3) Configurar variável de ambiente (opcional, mas recomendado)
+### 3) Variáveis de ambiente
 
-Crie um arquivo `.env.local` em `tatoStreaming-front`:
+Crie `.env.local` em `front/tatoStreaming-front`:
 
 ```env
 VITE_API_BASE_URL=http://localhost:3000
+VITE_USE_MOCK_MEDIA=false
+VITE_USE_MOCK_MEDIA_FALLBACK=true
 ```
 
-Observação:
+Notas:
+- O backend usa prefixo global `/api`.
+- `VITE_USE_MOCK_MEDIA=true` força catálogo em mock.
+- `VITE_USE_MOCK_MEDIA_FALLBACK=true` usa mock só quando a API falhar.
 
-- Se não configurar, o projeto usa `http://localhost:3000` por padrão.
-- O backend usa prefixo global `/api`, então as chamadas do front devem considerar esse prefixo no caminho da requisição.
-
-### 4) Rodar em modo desenvolvimento
+### 4) Rodar o front
 
 ```bash
 npm run dev
 ```
 
-Aplicação disponível em: `http://localhost:5173` (porta padrão do Vite).
+URL padrão: `http://localhost:5173`.
 
-## Scripts Principais
+## Scripts
 
-- `npm run dev`: sobe servidor de desenvolvimento.
-- `npm run build`: gera build de produção.
-- `npm run preview`: serve build localmente.
-- `npm run lint`: executa lint.
+- `npm run dev`: desenvolvimento.
+- `npm run build`: build de produção.
+- `npm run preview`: preview do build.
+- `npm run lint`: lint do projeto.
 
-## Integração com as Outras Partes
+## Ordem recomendada no workspace
 
-- Frontend consome a API do backend para fluxos de autenticação e mídias.
-- Contratos compartilhados podem ser centralizados no pacote `shared` para evitar divergência de tipos/validações entre front e back.
-- Em desenvolvimento, é comum iniciar nesta ordem:
-  1. `shared` (build)
-  2. `back` (API)
-  3. `front` (UI)
-
-## Status Atual
-
-- Rotas principais: `/`, `/login`, `/cadastro`.
-- Existe inicialização de autenticação mock no provider.
-- Lista de filmes da home ainda está conectada a dados mockados.
-
-Isso facilita evoluir UI/UX enquanto a integração backend é expandida gradualmente.
+1. `shared` (build)
+2. `back` (API + banco)
+3. `front` (UI)
