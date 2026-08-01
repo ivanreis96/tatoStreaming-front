@@ -110,13 +110,13 @@ export function HomePage() {
 
   const availableGenres: string[] = useMemo(() => {
     const normalizedGenres = [...movies.flatMap((movie) => movie.generos), ...BASE_MEDIA_GENRES]
-    .map((genre) => genre.trim()).filter((genre) => genre.length > 0)
+      .map((genre) => genre.trim()).filter((genre) => genre.length > 0)
 
     return Array.from(new Set(normalizedGenres)).sort((a, b) => a.localeCompare(b, 'pt-BR'))
   }, [movies])
 
   return (
-    <div className="w-full h-full flex flex-col items-strench justify-start">
+    <div className="w-full flex flex-col h-[calc(100dvh-118px)] justify-center items-center">
       <ToolsBar
         searchValue={searchValue}
         onSearchChange={onSearchChange}
@@ -143,7 +143,7 @@ export function HomePage() {
       ) : (
         <MovieList movies={paginatedMovies} />
       )}
-      
+
       {!isLoadingMovies && showPagination ? (
         <div className="w-full mt-4 px-6 pb-6 flex items-center justify-center gap-3">
           <Button
@@ -169,7 +169,7 @@ export function HomePage() {
             disabled={!canGoToNextPage}
             aria-label="Proxima pagina"
           >
-            Proxima
+            Próxima
           </Button>
         </div>
       ) : null}

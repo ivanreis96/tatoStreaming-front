@@ -30,9 +30,9 @@ function AppContent() {
   return (
     <div className="app-shell">
       <Header onThemeToggle={onThemeToggle} darkMode={darkMode} isLoged={isLoged} onAuthAction={onAuthAction} />
-      <main className="app-content">
-        <AppRoutes />
-      </main>
+        <main className="app-content">
+          <AppRoutes />
+        </main>
       <Footer />
     </div>
   )
