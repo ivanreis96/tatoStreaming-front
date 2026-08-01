@@ -71,7 +71,7 @@ export type UseAddMovieFormReturn = {
     onSituacaoChange: (situacao: MediaSituacao) => void
     onGenreChange: (genre: string, checked: boolean | 'indeterminate') => void
     onReleaseDateChange: (date: Date | undefined) => void
-    resetForm: () => void
+    resetForm: (nextInitialData?: AddMovieFormData) => void
     createMediaFromForm: (context: CreateMovieContext) => Media
     onAddGenresFromInput: (input: string) => void,
 }
@@ -123,10 +123,11 @@ export function useAddMovieForm(initialData: AddMovieFormData = INITIAL_ADD_MOVI
         onFieldChange('lancamento', date ? format(date, 'yyyy-MM-dd') : '')
     }, [onFieldChange])
 
-    const resetForm = useCallback(() => {
-        setForm(createInitialForm(INITIAL_ADD_MOVIE_FORM))
-        setReleaseDate(undefined)
-    }, [])
+    const resetForm = useCallback((nextInitialData?: AddMovieFormData) => {
+        const source = nextInitialData ?? initialData
+        setForm(createInitialForm(source))
+        setReleaseDate(parseReleaseDate(source.lancamento))
+    }, [initialData])
 
     const createMediaFromForm = useCallback((context: CreateMovieContext) => {
         return mapAddMovieFormToMedia(form, context)

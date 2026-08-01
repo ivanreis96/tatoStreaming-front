@@ -14,10 +14,10 @@ type MediaCardProps = {
 
 export function MovieCard(movieProps: MediaCardProps) {
     return (
-        <Link to={`/movie/${movieProps.id}`} className="block" aria-label={`Abrir detalhes de ${movieProps.titulo}`}>
+        <Link to={`/movie/${movieProps.id}`} className="" aria-label={`Abrir detalhes de ${movieProps.titulo}`}>
             <div className={styles['movie-card']}>
                 <div className={styles['movie-card-image']}>
-                    <AppImage src={movieProps.posterUrl } alt={movieProps.titulo} fullWidth={true} height="100%" />
+                    <AppImage src={movieProps.posterUrl } className={styles['movie-card-image']} alt={movieProps.titulo} fullWidth={true} />
                 </div>
                 <div className={styles['movie-card-description']}>
                     <h3 className={styles['movie-card-description__title']}>{movieProps.titulo}</h3>

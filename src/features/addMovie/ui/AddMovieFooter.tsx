@@ -4,9 +4,17 @@ type AddMovieProps = {
     onCloseFields: () => void
     onCreateMovie: () => void | Promise<void>
     isSubmitting?: boolean
+    submitLabel?: string
+    submittingLabel?: string
 }
 
-export function AddMovieFooter ({ onCloseFields, onCreateMovie, isSubmitting = false }: AddMovieProps) {
+export function AddMovieFooter ({
+    onCloseFields,
+    onCreateMovie,
+    isSubmitting = false,
+    submitLabel = 'Adicionar filme',
+    submittingLabel = 'Adicionando...'
+}: AddMovieProps) {
     return (
         <div className="w-full flex justify-end gap-4">
             <Button                
@@ -23,7 +31,7 @@ export function AddMovieFooter ({ onCloseFields, onCreateMovie, isSubmitting = f
                 onClick={onCreateMovie}
                 disabled={isSubmitting}
             >
-                {isSubmitting ? 'Adicionando...' : 'Adicionar filme'}
+                {isSubmitting ? submittingLabel : submitLabel}
             </Button> 
         </div>
     )

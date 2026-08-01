@@ -5,7 +5,7 @@ import type { Media } from '@/entities/media'
 import { filterMoviesByOtherFields } from '@/features/movieFilters'
 import type { MovieFilters } from '@/features/movieFilters'
 
-const MOVIES_PER_PAGE = 20
+const MOVIES_PER_PAGE = 10
 
 type UseHomeMoviesResult = {
   searchValue: string
