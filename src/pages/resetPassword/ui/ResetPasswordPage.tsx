@@ -1,5 +1,6 @@
 import { useSearchParams } from 'react-router-dom'
 import { ResetPasswordForm } from '@/features/authReset'
+import { authApi } from '@/shared/api'
 import { AuthPageLayout } from '@/shared/ui/AuthPageLayout'
 
 export function ResetPasswordPage() {
@@ -11,7 +12,10 @@ export function ResetPasswordPage() {
             title="Redefinir senha"
             description="Defina uma nova senha para concluir a recuperação da conta."
         >
-            <ResetPasswordForm token={token} />
+            <ResetPasswordForm
+                token={token}
+                submitAction={(payload) => authApi.resetPassword(payload)}
+            />
         </AuthPageLayout>
     )
 }

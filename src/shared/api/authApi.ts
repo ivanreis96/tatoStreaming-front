@@ -1,13 +1,22 @@
 import type {
+  AuthMessageResponse,
   AuthSession,
+  ForgotPasswordDto,
   LoginDto,
   RefreshTokenDto,
   RegisterDto,
+  ResetPasswordDto,
   UserProfile,
 } from '../../../../../shared/dist/index.js'
 import { httpClient } from './httpClient'
 
-type AuthApiPath = '/api/auth/register' | '/api/auth/login' | '/api/auth/refresh' | '/api/auth/me'
+type AuthApiPath =
+  | '/api/auth/register'
+  | '/api/auth/login'
+  | '/api/auth/refresh'
+  | '/api/auth/me'
+  | '/api/auth/forgot-password'
+  | '/api/auth/reset-password'
 
 function authRequest<T>(path: AuthApiPath, options?: Parameters<typeof httpClient<T>>[1]) {
   return httpClient<T>(path, options)
@@ -40,5 +49,19 @@ export function me(accessToken: string) {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
+  })
+}
+
+export function forgotPassword(data: ForgotPasswordDto) {
+  return authRequest<AuthMessageResponse>('/api/auth/forgot-password', {
+    method: 'POST',
+    body: data,
+  })
+}
+
+export function resetPassword(data: ResetPasswordDto) {
+  return authRequest<AuthMessageResponse>('/api/auth/reset-password', {
+    method: 'POST',
+    body: data,
   })
 }

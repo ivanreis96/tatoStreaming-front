@@ -1,4 +1,5 @@
 import { ForgotPasswordForm } from '@/features/authReset'
+import { authApi } from '@/shared/api'
 import { AuthPageLayout } from '@/shared/ui/AuthPageLayout'
 
 export function ForgotPasswordPage() {
@@ -7,7 +8,9 @@ export function ForgotPasswordPage() {
             title="Recuperar senha"
             description="Informe seu e-mail para receber as instruções de recuperação."
         >
-            <ForgotPasswordForm />
+            <ForgotPasswordForm
+                submitAction={(payload) => authApi.forgotPassword(payload)}
+            />
         </AuthPageLayout>
     )
 }
