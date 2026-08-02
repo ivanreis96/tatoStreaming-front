@@ -1,21 +1,13 @@
-import { FormCard, type FormCardProps } from '@/shared'
-import styles from '../style.module.css'
+import { AuthPageLayout } from '@/shared'
 import { FormLogin } from './FormLogin'
-
-var childrenCard: FormCardProps = {
-    children:
-        <FormLogin />
-    ,
-    customClasses: ["p-4"],
-}
-
 
 export function LoginPage() {
     return (
-        <div className={styles['align-login']}>
-            <div className={styles['login-page']}>
-                <FormCard {...childrenCard} />
-            </div>
-        </div>
+        <AuthPageLayout
+            title="Entrar"
+            description="Use seu e-mail e senha para acessar a plataforma."
+        >
+            <FormLogin />
+        </AuthPageLayout>
     )
 }

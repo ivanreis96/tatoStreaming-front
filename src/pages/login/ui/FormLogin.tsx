@@ -77,7 +77,9 @@ export function FormLogin() {
                 {errorMessage ? <FieldError>{errorMessage}</FieldError> : null}
 
                 <div className="flex w-full items-center justify-between gap-4">
-                    <Button type="button" variant="link">Esqueci minha senha</Button>
+                    <Button type="button" variant="link" onClick={() => navigate('/esqueci-senha')}>
+                        Esqueci minha senha
+                    </Button>
                     <Button type="submit" variant="default" size="default" disabled={isSubmitting}>
                         {isSubmitting ? 'Entrando...' : 'Entrar'}
                     </Button>
