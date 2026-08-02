@@ -81,6 +81,8 @@ export function MoviePage() {
         return Array.from(new Set(normalizedGenres)).sort((a, b) => a.localeCompare(b, 'pt-BR'))
     }, [movie])
 
+    const isOwner = Boolean(movie && authState.currentUser && movie.createdBy === authState.currentUser.id)
+
     useEffect(() => {
         let isMounted = true
 
@@ -270,53 +272,55 @@ export function MoviePage() {
                             <h1 className="text-[32px] font-heading subtitle color-white">{movie.titulo}</h1>
                             <p className="text-base font-heading color-white">Título original: {movie.tituloOriginal}</p>
                         </div>
-                        <div className='flex gap-4'>
-                            <Button
-                                variant={"secondary"}
-                                onClick={handleDeleteMovie}
-                                disabled={isDeleting || isUpdating}
-                            >
-                                {isDeleting ? 'Deletando...' : 'Deletar'}
-                            </Button>
-                            <SheetBase
-                                open={isEditSheetOpen}
-                                onOpenChange={handleEditSheetOpenChange}
-                                buttonTrigger={
-                                    <Button
-                                        variant={"default"}
-                                        disabled={isDeleting || isUpdating}
-                                    >
-                                        Editar
-                                    </Button>
-                                }
-                                title={'Editar filme'}
-                                side={'right'}
-                                children={
-                                    <AddMovieContent
-                                        form={form}
-                                        releaseDate={releaseDate}
-                                        lucro={lucro}
-                                        onFieldChange={onFieldChange}
-                                        onKindChange={onKindChange}
-                                        onSituacaoChange={onSituacaoChange}
-                                        onGenreChange={onGenreChange}
-                                        onReleaseDateChange={onReleaseDateChange}
-                                        availableGenres={availableGenres}
-                                        onAddGenresFromInput={onAddGenresFromInput}
-                                        genreValidationError={editFormError}
-                                    />
-                                }
-                                footerContent={
-                                    <AddMovieFooter
-                                        onCloseFields={() => handleEditSheetOpenChange(false)}
-                                        onCreateMovie={handleUpdateMovie}
-                                        isSubmitting={isUpdating}
-                                        submitLabel={'Salvar alterações'}
-                                        submittingLabel={'Salvando...'}
-                                    />
-                                }
-                            />
-                        </div>
+                        {isOwner ? (
+                            <div className='flex gap-4'>
+                                <Button
+                                    variant={"secondary"}
+                                    onClick={handleDeleteMovie}
+                                    disabled={isDeleting || isUpdating}
+                                >
+                                    {isDeleting ? 'Deletando...' : 'Deletar'}
+                                </Button>
+                                <SheetBase
+                                    open={isEditSheetOpen}
+                                    onOpenChange={handleEditSheetOpenChange}
+                                    buttonTrigger={
+                                        <Button
+                                            variant={"default"}
+                                            disabled={isDeleting || isUpdating}
+                                        >
+                                            Editar
+                                        </Button>
+                                    }
+                                    title={'Editar filme'}
+                                    side={'right'}
+                                    children={
+                                        <AddMovieContent
+                                            form={form}
+                                            releaseDate={releaseDate}
+                                            lucro={lucro}
+                                            onFieldChange={onFieldChange}
+                                            onKindChange={onKindChange}
+                                            onSituacaoChange={onSituacaoChange}
+                                            onGenreChange={onGenreChange}
+                                            onReleaseDateChange={onReleaseDateChange}
+                                            availableGenres={availableGenres}
+                                            onAddGenresFromInput={onAddGenresFromInput}
+                                            genreValidationError={editFormError}
+                                        />
+                                    }
+                                    footerContent={
+                                        <AddMovieFooter
+                                            onCloseFields={() => handleEditSheetOpenChange(false)}
+                                            onCreateMovie={handleUpdateMovie}
+                                            isSubmitting={isUpdating}
+                                            submitLabel={'Salvar alterações'}
+                                            submittingLabel={'Salvando...'}
+                                        />
+                                    }
+                                />
+                            </div>
+                        ) : null}
                     </div>
 
                     {actionError ? (
