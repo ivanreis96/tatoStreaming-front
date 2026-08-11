@@ -51,7 +51,7 @@ Relações no workspace:
 
 ### Fase 5 - Qualidade e hardening
 
-- Pendente: testes automatizados de interface (unit/integration/e2e).
+- Parcial: base de testes automatizados de interface implementada (unit/integration/e2e).
 - Pendente: estratégia automática de refresh token no front.
 
 ## Requisitos
@@ -105,6 +105,44 @@ URL padrão: `http://localhost:5173`.
 - `npm run build`: build de produção.
 - `npm run preview`: preview do build.
 - `npm run lint`: lint do projeto.
+- `npm run test`: executa testes unitários e de integração (Jest).
+- `npm run test:e2e`: executa testes end-to-end (Playwright).
+
+## Testes
+
+### Stack de testes
+
+- Unitário e integração: Jest + ts-jest.
+- E2E: Playwright.
+
+### Executar testes
+
+Unitário/integracao:
+
+```bash
+npm run test
+```
+
+E2E (Playwright):
+
+```bash
+npm run test:e2e
+```
+
+Observação para E2E:
+
+- Se for a primeira execução do Playwright no ambiente, instale os navegadores:
+
+```bash
+npx playwright install
+```
+
+### Cobertura atual implementada
+
+- Rotas protegidas e rotas públicas condicionais (integração).
+- Mapeamento e validação de dados do formulário de adicionar filme (unitário).
+- Fallback do gateway de mídia para mock em falha da API (integração).
+- Redirecionamento de visitante para login em fluxo real de navegação (e2e smoke).
 
 ## Ordem recomendada no workspace
 
